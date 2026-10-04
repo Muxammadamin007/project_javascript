@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<body style="font-family:system-ui;padding:20px;max-width:400px;margin:auto">
+
+  <style>
+    h2 {
+      color: black;
+    }
+
+    .add-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    input {
+      flex: 1;
+      padding: 8px 12px;
+      border: 2px solid #c8d4f0;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+    ul{
+      height: 70vh;
+      overflow-y: scroll;
+      li{
+        width: 100%;
+        overflow-x: scroll;
+      }
+    }
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .add-btn {
+      background: black;
+      color: white;
+    }
+
+    #todo-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .todo-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      margin-bottom: 6px;
+      background: #f0f4ff;
+      border-radius: 8px;
+      border: 1px solid #c8d4f0;
+    }
+
+    .del-btn {
+      background: #dc2626;
+      color: white;
+      padding: 4px 10px;
+      font-size: 12px;
+      border-radius: 6px;
+    }
+
+    #empty-msg {
+      color: #9ca3af;
+      text-align: center;
+      padding: 20px;
+      display: none;
+    }
+  </style>
+
+  <h2>My To-Do List</h2>
+
+  <div class="add-row">
+    <input
+      id="todo-input"
+      type="text"
+      placeholder="Add a task..."
+    >
+
+    <button id="add-btn" class="add-btn">
+      + Add
+    </button>
+  </div>
+
+  <ul id="todo-list"></ul>
+
+  <p id="empty-msg">
+    No tasks yet! Add one above.
+  </p>
+
+  <script>
+
+    const input = document.getElementById('todo-input');
+    const addBtn = document.getElementById('add-btn');
+    const todoList = document.getElementById('todo-list');
+    const emptyMsg = document.getElementById('empty-msg');
+
+
+    function addTask() {
+
+      const task = input.value.trim();
+
+      if (task === '') {
+        alert('Please enter a task.');
+        return;
+      }
+
+      const li = document.createElement('li');
+      li.className = 'todo-item';
+
+      const span = document.createElement('span');
+      span.textContent = task;
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.textContent = '✕';
+      deleteBtn.className = 'del-btn';
+
+      li.appendChild(span);
+      li.appendChild(deleteBtn);
+
+      todoList.appendChild(li);
+
+      input.value = '';
+
+      emptyMsg.style.display = 'none';
+    }
+
+
+    addBtn.addEventListener('click', addTask);
+
+
+    input.addEventListener('keydown', function(e) {
+
+      if (e.key === 'Enter') {
+        addTask();
+      }
+
+    });
+
+
+    todoList.addEventListener('click', function(e) {
+      
+      if (e.target.classList.contains('del-btn')) {
+
+        e.target.parentElement.remove();
+
+        if (todoList.children.length === 0) {
+          emptyMsg.style.display = 'block';
+        }
+
+      }
+
+    });
+
+  </script>
+
+</body>
+</html>
