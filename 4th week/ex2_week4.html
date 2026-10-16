@@ -54,17 +54,13 @@
   </div>
 
   <script>
-    // Select card and button
     const card = document.getElementById("card");
     const toggleBtn = document.getElementById("toggle-btn");
 
-    // Add click event
     toggleBtn.addEventListener("click", function () {
 
-      // Toggle dark class
       card.classList.toggle("dark");
 
-      // Change button text
       if (card.classList.contains("dark")) {
         toggleBtn.textContent = "Light Mode";
       } else {
