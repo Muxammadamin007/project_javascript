@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mukhammadamin | Portfolio</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+      line-height: 1.6;
+    }
+
+    nav {
+      background-color: #1e293b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 30px;
+    }
+
+    .logo {
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 24px;
+    }
+
+    .nav-links {
+      display: flex;
+      transform: translateX(30px);
+      gap: 24px;
+    }
+
+    .contact-links{
+      color: #10B981;
+      font-weight: bold;
+      text-decoration: underline!important;
+      text-underline-offset: 4px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      transform: translateX(-630px);
+    }
+
+    .nav-links a:hover {
+      color: #10B981;
+    }
+
+    .profile {
+      max-width: 1000px;
+      margin: 60px auto;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .profile img {
+      width: 230px;
+      height: 230px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 5px solid white;
+      box-shadow: 0 8px 25px #00000018;
+    }
+
+    .profile-info h1 {
+      font-size: 38px;
+      margin-bottom: 8px;
+    }
+
+    .role {
+      color: #2563eb;
+      font-weight: bold;
+      margin-bottom: 18px;
+    }
+
+    .bio {
+      max-width: 600px;
+      color: #4b5563;
+      margin-bottom: 18px;
+    }
+
+    .bio-tags {
+      color: #374151;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 25px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 6px;
+      background: #2563eb;
+      color: white;
+      text-decoration: none;
+    }
+
+    .button.secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 35px 20px;
+    }
+
+    section h2 {
+      font-size: 28px;
+      margin-bottom: 18px;
+    }
+
+    .about-text {
+      color: #4b5563;
+      max-width: 750px;
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .project-card {
+      background: white;
+      padding: 22px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px #0000000d;
+    }
+
+    .project-card h3 {
+      margin-bottom: 10px;
+    }
+
+    .project-card p {
+      color: #6b7280;
+    }
+
+    footer {
+      margin-top: 50px;
+      padding: 25px;
+      background: #111827;
+      color: white;
+      text-align: center;
+    }
+
+    @media (max-width: 650px) {
+      nav {
+        flex-direction: column;
+      }
+
+      .profile {
+        flex-direction: column;
+        text-align: center;
+        margin-top: 40px;
+      }
+
+      .profile-info h1 {
+        font-size: 30px;
+      }
+
+      .buttons {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="#" class="logo">WebPro</a>
+
+    <div class="nav-links">
+      <a href="ex8.html">Home</a>
+      <a href="https://github.com/Muxammadamin007?tab=repositories">Projects</a>
+      <a href="contact.html">Contact</a>
+      <a href="ex7.html" class="contact-links">About</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="profile" id="home">
+      <img src="photo_2026-09-18_01-33-09.jpg" alt="Photo of Mukhammadamin">
+
+      <div class="profile-info">
+        <h1>Khakimov Mukhammadamin</h1>
+
+        <p class="role">Computer Engineering Student | Aspiring Developer</p>
+
+        <p class="bio">
+          Computer Engineering student at Gachon University, focused on building
+          useful things with code. Exploring web development and AI, learning by
+          creating projects, and finding better ways to solve problems.
+        </p>
+
+        <p class="bio-tags">
+          Web Development · AI · Problem Solving · Chess
+        </p>
+
+        <div class="buttons">
+          <a class="button" href="https://github.com/Muxammadamin007?tab=repositories">View Projects</a>
+          <a class="button secondary" href="contact.html">Contact Me</a>
+        </div>
+      </div>
+    </div>
+
+    <section id="about">
+      <h2>About Me</h2>
+
+      <p class="about-text">
+        I'm a Computer Engineering student at Gachon University in South Korea.
+        I'm interested in web development and artificial intelligence, and I
+        enjoy turning ideas into practical projects. I believe the best way to
+        improve as a developer is to keep learning, building, and solving real
+        problems.
+      </p>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+
+      <div class="projects">
+        <div class="project-card">
+          <h3>Web Development</h3>
+          <p>Personal projects built while learning HTML, CSS, JavaScript, and React.</p>
+        </div>
+
+        <div class="project-card">
+          <h3>AI Projects</h3>
+          <p>Exploring how AI can be used to solve practical problems.</p>
+        </div>
+
+        <div class="project-card">
+          <h3>More Coming Soon</h3>
+          <p>I'm always learning and working on new ideas.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p> 2026 Mukhammadamin. Built with HTML and CSS.</p>
+  </footer>
+
+</body>
+</html>

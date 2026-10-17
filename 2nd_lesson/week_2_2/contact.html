@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Mukhammadamin</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
+      line-height: 1.6;
+      overflow: hidden;
+    }
+
+    nav {
+      background-color: #1e293b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 30px;
+    }
+
+    .logo {
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 24px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      transform: translateX(-630px);
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .contact-link{
+      color: #10B981;
+      font-weight: bold;
+      text-decoration: underline!important;
+      text-underline-offset: 4px;
+
+    }
+
+    .nav-links a:hover {
+      color: #10B981;
+    }
+
+    .contact {
+      max-width: 700px;
+      margin: 35px auto;
+      padding: 0 20px;
+    }
+
+    .contact h1 {
+      font-size: 38px;
+      margin-bottom: 10px;
+    }
+
+    .contact-intro {
+      color: #4b5563;
+      margin-bottom: 30px;
+    }
+
+    .contact-card {
+      background: white;
+      padding: 22px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px #0000000d;
+      margin-bottom: 18px;
+    }
+
+    .contact-card h2 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .contact-card a {
+      color: #2563eb;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+
+    .contact-card a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      margin-top: 50px;
+      padding: 25px;
+      background: #111827;
+      color: white;
+      text-align: center;
+    }
+
+    @media (max-width: 650px) {
+      nav {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .contact h1 {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="index.html" class="logo">WebPro</a>
+
+    <div class="nav-links">
+      <a href="ex8.html">Home</a>
+      <a href="https://github.com/Muxammadamin007?tab=repositories">Projects</a>
+      <a href="ex8.html" class="contact-link">Contact</a>
+      <a href="ex7.html">About</a>
+    </div>
+  </nav>
+
+  <main class="contact">
+    <h1>Get in Touch</h1>
+
+    <p class="contact-intro">
+      Have a question or want to work together? Feel free to contact me.
+    </p>
+
+    <div class="contact-card">
+      <h2>Email</h2>
+      <a href="mailto:muxammadaminxakimov@gmail.com">
+        muxammadaminxakimov@gmail.com
+      </a>
+    </div>
+
+    <div class="contact-card">
+      <h2>Telegram</h2>
+      <a href="https://t.me/khakmv_777" target="_blank" rel="noopener noreferrer">
+        @khakmv_777
+      </a>
+    </div>
+
+    <div class="contact-card">
+      <h2>Instagram</h2>
+      <a href="https://www.instagram.com/khakmv_777" target="_blank" rel="noopener noreferrer">
+        @khakmv_777
+      </a>
+    </div>
+  </main>
+
+  <footer>
+    <p>2026 Mukhammadamin. Built with HTML and CSS.</p>
+  </footer>
+
+</body>
+</html>

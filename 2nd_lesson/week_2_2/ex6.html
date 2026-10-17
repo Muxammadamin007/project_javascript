@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: sans-serif;
+    }
+
+    nav {
+      background-color: #1e293b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 30px;
+    }
+
+    .logo {
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 24px;
+    }
+
+    .nav-links {
+      display: flex;
+      transform: translateX(30px);
+      gap: 24px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover {
+      color: #10B981;
+    }
+    .nav-buttons {
+      display: flex;
+      gap: 24px;
+      button{
+        padding: 5px 15px;
+        border: none;
+        border-radius: 5px;
+      }
+    }
+
+    .nav-buttons button:hover {
+      background-color: #10B981;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#" class="logo">WebPro</a>
+
+    <div class="nav-links">
+      <a href="ex8.html">Home</a>
+      <a href="ex7.html">Contact</a>
+      <a href="https://github.com/Muxammadamin007?tab=repositories">Projects</a>
+      <a href="ex8.html">About</a>
+    </div>
+    <div class="nav-buttons">
+      <button>Login</button>
+      <button>Sign Up</button>
+    </div>
+  </nav>
+</body>
+</html>

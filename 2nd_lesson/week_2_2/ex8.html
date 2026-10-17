@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mukhammadamin | CSS Portfolio</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.2;
+    }
+
+    p {
+      color: #64748b;
+    }
+
+    nav {
+      background-color: #1e293b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 30px;
+    }
+
+    .logo {
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 24px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .home-link {
+      color: #10B981 !important;
+      font-weight: bold;
+      text-decoration: underline !important;
+      text-underline-offset: 4px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover {
+      color: #10B981;
+    }
+
+    .hero {
+      background-color: #e2e8f0;
+      text-align: center;
+      padding: 100px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      color: rgb(5, 5, 162);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: blue;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #166534;
+    }
+
+    .about-section {
+      padding: 70px 8%;
+      text-align: center;
+    }
+
+    .about-section h2 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+
+    .about-text {
+      max-width: 750px;
+      margin: 0 auto;
+    }
+
+    .skills-section {
+      padding: 70px 8%;
+      text-align: center;
+    }
+
+    .skills-section h2 {
+      font-size: 2rem;
+      margin-bottom: 40px;
+    }
+
+    .skills-grid {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .skill-card {
+      background-color: white;
+      padding: 30px 20px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      flex: 1 1 200px;
+      max-width: 350px;
+    }
+
+    .skill-card h3 {
+      color: blue;
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+    }
+
+    .projects-section {
+      padding: 70px 8%;
+      text-align: center;
+    }
+
+    .projects-section h2 {
+      font-size: 2rem;
+      margin-bottom: 40px;
+    }
+
+    .projects-grid {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .project-card {
+      background-color: white;
+      padding: 30px 20px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      flex: 1 1 200px;
+      max-width: 350px;
+    }
+
+    .project-card h3 {
+      color: blue;
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+    }
+
+    .contact-section {
+      padding: 70px 8%;
+      text-align: center;
+    }
+
+    .contact-section h2 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .contact-links a {
+      color: blue;
+      font-weight: bold;
+    }
+
+    .contact-links a:hover {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .footer {
+      background-color: #1e293b;
+      color: white;
+      text-align: center;
+      padding: 24px;
+    }
+
+    .footer p {
+      color: #cbd5e1;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        padding: 16px 5%;
+      }
+
+      .nav-links {
+        gap: 12px;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero {
+        padding: 70px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="#home" class="logo">WebPro</a>
+
+    <div class="nav-links">
+      <a href="ex8.html" class="home-link">Home</a>
+      <a href="ex7.html">About</a>
+      <a href="ex7.html">Skills</a>
+      <a href="https://github.com/Muxammadamin007?tab=repositories">Projects</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+
+
+  <section class="hero" id="home">
+    <h1>Hello, I am Mukhammadamin!</h1>
+
+    <p>Computer Engineering Student · Web Developer · AI Enthusiast</p>
+
+    <a href="ex7.html" class="btn">See My Skills</a>
+  </section>
+
+
+  <section class="about-section" id="about">
+    <h2>About Me</h2>
+
+    <p class="about-text">
+      I am a Computer Engineering student at Gachon University in South Korea.
+      I am interested in web development, artificial intelligence, and
+      programming. I enjoy learning new technologies and building useful
+      projects with code.
+    </p>
+  </section>
+
+
+  <section class="skills-section" id="skills">
+    <h2>What I Know</h2>
+    <div class="skills-grid">
+
+      <div class="skill-card">
+        <h3>HTML</h3>
+        <p>Structure and semantics</p>
+      </div>
+
+      <div class="skill-card">
+        <h3>CSS</h3>
+        <p>Styling and layout</p>
+      </div>
+
+      <div class="skill-card">
+        <h3>JavaScript</h3>
+        <p>Giving functions</p>
+      </div>
+      <div class="skill-card">
+        <h3>React</h3>
+        <p>Can do all together</p>
+      </div>
+      <div class="skill-card">
+        <h3>BackEnd</h3>
+        <p>Connects to databases and handles server-side logic</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <section class="projects-section" id="projects">
+    <h2>My Projects</h2>
+
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <a href="https://github.com/Muxammadamin007?tab=repositories" target="_blank">
+          <h3>Portfolio Website</h3>
+        </a>
+        <p>A personal portfolio website built with HTML and CSS.</p>
+      </div>
+
+      <div class="project-card">
+        <h3>Web Development</h3>
+        <p>Projects created while learning HTML, CSS, JavaScript and React.</p>
+      </div>
+
+      <div class="project-card">
+        <h3>AI Projects</h3>
+        <p>Exploring artificial intelligence and practical AI applications.</p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <section class="contact-section" id="contact">
+    <h2>Contact Me</h2>
+
+    <div class="contact-links">
+
+      <a href="mailto:muxammadaminxakimov@gmail.com">
+        Email
+      </a>
+
+      <a href="https://t.me/khakmv_777" target="_blank">
+        Telegram
+      </a>
+
+      <a href="https://www.instagram.com/khakmv_777" target="_blank">
+        Instagram
+      </a>
+
+    </div>
+  </section>
+
+
+  <footer class="footer">
+    <p>K0126002 Web Programming &copy; 2026 Gachon University</p>
+  </footer>
+
+</body>
+
+</html>
