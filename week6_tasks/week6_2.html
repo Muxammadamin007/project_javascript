@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Latest Posts</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 40px 20px; font-family: Arial, sans-serif; color: #202124; background: white; }
+    main { max-width: 800px; margin: auto; }
+    h1 { font-size: 32px; letter-spacing: -1px; }
+    .muted { color: #6b7280; line-height: 1.6; }
+    button { background: #2563eb; color: white; border: 0; border-radius: 8px; padding: 12px 18px; cursor: pointer; }
+    button:disabled { opacity: .5; }
+    .post { padding: 20px 0; border-bottom: 1px solid #e5e7eb; }
+    .post h2 { font-size: 19px; text-transform: capitalize; }
+    .post p { color: #525866; line-height: 1.7; }
+    #status { min-height: 24px; color: #6b7280; }
+  </style>
+</head>
+<body>
+<main>
+  <p class="muted">WEEK 06 / TASK 02</p>
+  <h1>Latest Posts</h1>
+  <p class="muted">Load and explore posts from the JSONPlaceholder API.</p>
+  <button id="loadBtn">Load posts</button>
+  <p id="status" role="status"></p>
+  <section id="posts"></section>
+</main>
+
+<script>
+  const loadBtn = document.getElementById("loadBtn");
+  const status = document.getElementById("status");
+  const postsContainer = document.getElementById("posts");
+
+  async function loadPosts() {
+    loadBtn.disabled = true;
+    status.textContent = "Loading posts...";
+    postsContainer.replaceChildren();
+
+    try {
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/posts?_limit=10"
+      );
+      if (!response.ok) throw new Error("Failed to load posts.");
+
+      const posts = await response.json();
+
+      posts.forEach(post => {
+        const article = document.createElement("article");
+        article.className = "post";
+
+        const title = document.createElement("h2");
+        title.textContent = post.title;
+
+        const body = document.createElement("p");
+        body.textContent = post.body;
+
+        const number = document.createElement("small");
+        number.textContent = "POST #" + post.id;
+
+        article.append(number, title, body);
+        postsContainer.append(article);
+      });
+
+      status.textContent = posts.length + " posts loaded successfully.";
+    } catch (error) {
+      status.textContent = "Unable to load posts. Please try again.";
+    } finally {
+      loadBtn.disabled = false;
+      console.log("Request finished.");
+    }
+  }
+
+  loadBtn.addEventListener("click", loadPosts);
+</script>
+</body>
+</html>

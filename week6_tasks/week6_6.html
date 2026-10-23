@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Country Weather</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 40px 20px; font-family: Arial, sans-serif; background: #fff; color: #202124; }
+    main { max-width: 720px; margin: auto; }
+    header { text-align: center; margin-bottom: 28px; }
+    h1 { font-size: 34px; letter-spacing: -1px; }
+    .muted { color: #6b7280; line-height: 1.6; }
+    .search { display: flex; gap: 10px; margin: 25px 0; }
+    input { flex: 1; min-width: 0; padding: 13px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 16px; }
+    button { padding: 12px 18px; background: #2563eb; color: white; border: 0; border-radius: 8px; cursor: pointer; }
+    button:disabled { opacity: .5; }
+    #status { min-height: 24px; color: #6b7280; text-align: center; }
+    #weather { display: none; margin: 25px auto; padding: 28px; border: 1px solid #e5e7eb; border-radius: 16px; box-shadow: 0 5px 20px #00000008; }
+    #temperature { font-size: 54px; font-weight: 700; margin: 18px 0; }
+    #condition { font-size: 20px; }
+    .details { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 24px; }
+    .detail { padding: 15px; background: #f8fafc; border-radius: 8px; font-size: 14px; }
+    @media (max-width: 500px) { .search { flex-direction: column; } .details { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="muted">WEEK 06 / TASK 06</p>
+    <h1>Country Weather</h1>
+    <p class="muted">Check current weather conditions for any city.</p>
+  </header>
+
+  <form class="search" id="searchForm">
+    <input id="cityInput" type="text" placeholder="Enter a city, e.g. Seoul" required>
+    <button id="searchBtn" type="submit">Search weather</button>
+  </form>
+
+  <p id="status" role="status">Enter a city to see its weather.</p>
+
+  <section id="weather">
+    <h2 id="cityName"></h2>
+    <p id="countryName" class="muted"></p>
+    <div id="temperature"></div>
+    <p id="condition"></p>
+
+    <div class="details">
+      <div class="detail" id="feelsLike"></div>
+      <div class="detail" id="humidity"></div>
+      <div class="detail" id="wind"></div>
+      <div class="detail" id="updated"></div>
+    </div>
+  </section>
+</main>
+
+<script>
+  const cityInput = document.getElementById("cityInput");
+  const status = document.getElementById("status");
+  const weatherCard = document.getElementById("weather");
+  const searchBtn = document.getElementById("searchBtn");
+  const searchForm = document.getElementById("searchForm");
+
+  async function getWeather() {
+    const city = cityInput.value.trim();
+
+    if (!city) {
+      status.textContent = "Please enter a city name.";
+      weatherCard.style.display = "none";
+      return;
+    }
+
+    searchBtn.disabled = true;
+    status.textContent = "Loading weather...";
+    weatherCard.style.display = "none";
+
+    try {
+      const geoResponse = await fetch(
+        "https://geocoding-api.open-meteo.com/v1/search?name=" +
+        encodeURIComponent(city) +
+        "&count=1&language=en&format=json"
+      );
+
+      if (!geoResponse.ok) throw new Error("Could not search for the city.");
+
+      const geoData = await geoResponse.json();
+
+      if (!geoData.results || geoData.results.length === 0) {
+        throw new Error("City not found. Try another name.");
+      }
+
+      const place = geoData.results[0];
+
+      const weatherUrl =
+        "https://api.open-meteo.com/v1/forecast" +
+        `?latitude=${place.latitude}` +
+        `&longitude=${place.longitude}` +
+        "&current=temperature_2m,relative_humidity_2m," +
+        "apparent_temperature,wind_speed_10m,weather_code" +
+        "&timezone=auto";
+
+      const weatherResponse = await fetch(weatherUrl);
+      if (!weatherResponse.ok) throw new Error("Could not load weather data.");
+
+      const weatherData = await weatherResponse.json();
+      const current = weatherData.current;
+
+      document.getElementById("cityName").textContent = place.name;
+      document.getElementById("countryName").textContent = place.country || "";
+
+      document.getElementById("temperature").textContent =
+        `${Math.round(current.temperature_2m)}°C`;
+
+      document.getElementById("condition").textContent =
+        getCondition(current.weather_code);
+
+      document.getElementById("feelsLike").textContent =
+        `Feels like: ${current.apparent_temperature}°C`;
+
+      document.getElementById("humidity").textContent =
+        `Humidity: ${current.relative_humidity_2m}%`;
+
+      document.getElementById("wind").textContent =
+        `Wind speed: ${current.wind_speed_10m} km/h`;
+
+      document.getElementById("updated").textContent =
+        `Updated: ${current.time.replace("T", " ")}`;
+
+      status.textContent = "Weather loaded successfully.";
+      weatherCard.style.display = "block";
+    } catch (error) {
+      status.textContent = error.message || "Unable to load weather.";
+      weatherCard.style.display = "none";
+    } finally {
+      searchBtn.disabled = false;
+    }
+  }
+
+  function getCondition(code) {
+    if (code === 0) return "Clear sky";
+    if ([1, 2, 3].includes(code)) return "Partly cloudy";
+    if ([45, 48].includes(code)) return "Fog";
+    if ([51, 53, 55, 56, 57].includes(code)) return "Drizzle";
+    if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code)) return "Rain";
+    if ([71, 73, 75, 77, 85, 86].includes(code)) return "Snow";
+    if ([95, 96, 99].includes(code)) return "Thunderstorm";
+    return "Weather information";
+  }
+
+  searchForm.addEventListener("submit", event => {
+    event.preventDefault();
+    getWeather();
+  });
+</script>
+</body>
+</html>

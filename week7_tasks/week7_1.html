@@ -1,0 +1,490 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Finder</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      font-family: Arial, sans-serif;
+      background: #ffffff;
+      color: #202124;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .label {
+      color: #2563eb;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    h1 {
+      font-size: clamp(32px, 5vw, 46px);
+      letter-spacing: -1.5px;
+      margin: 15px 0;
+    }
+
+    .subtitle {
+      color: #6b7280;
+      line-height: 1.7;
+    }
+
+    .search-box {
+      display: flex;
+      max-width: 700px;
+      gap: 10px;
+      margin: 30px auto;
+    }
+
+    input {
+      flex: 1;
+      min-width: 0;
+      padding: 15px;
+      border: 1px solid #d1d5db;
+      border-radius: 9px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px #2563eb18;
+    }
+
+    button {
+      padding: 13px 20px;
+      border: 1px solid #d1d5db;
+      border-radius: 9px;
+      background: #ffffff;
+      color: #202124;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button.primary {
+      background: #2563eb;
+      color: white;
+      border-color: #2563eb;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 35px 0 20px;
+    }
+
+    .section-heading h2 {
+      font-size: 21px;
+    }
+
+    #status {
+      text-align: center;
+      min-height: 24px;
+      color: #6b7280;
+      margin: 25px 0;
+    }
+
+    #bookResults {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 20px;
+    }
+
+    .book-card {
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 16px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .book-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px #0000000a;
+    }
+
+    .cover {
+      width: 100%;
+      height: 220px;
+      object-fit: contain;
+      background: #f8fafc;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .book-card h3 {
+      font-size: 17px;
+      line-height: 1.5;
+      margin: 5px 0 10px;
+    }
+
+    .author {
+      color: #6b7280;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .book-card a {
+      display: inline-block;
+      margin-top: 12px;
+      color: #2563eb;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .book-card a:hover {
+      text-decoration: underline;
+    }
+
+    .remove-btn {
+      width: 100%;
+      margin-top: 12px;
+      color: #b91c1c;
+    }
+
+    .empty {
+      color: #6b7280;
+      padding: 20px 0;
+      grid-column: 1 / -1;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 25px 15px;
+      }
+
+      .search-box {
+        flex-direction: column;
+      }
+
+      .search-box button {
+        width: 100%;
+      }
+
+      .cover {
+        height: 190px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <header>
+      <p class="label">WEEK 07 PROJECT</p>
+      <h1>Book Finder</h1>
+      <p class="subtitle">
+        Discover books, explore authors, and save your favourites.
+      </p>
+    </header>
+
+    <form class="search-box" id="searchForm">
+      <input
+        type="search"
+        id="searchInput"
+        placeholder="Search by title, author, or subject..."
+        required
+      >
+      <button type="submit" class="primary" id="searchBtn">
+        Search books
+      </button>
+    </form>
+
+    <p id="status" role="status">
+      Search for a book to get started.
+    </p>
+
+    <section>
+      <div class="section-heading">
+        <h2>Search results</h2>
+        <span class="subtitle" id="resultCount"></span>
+      </div>
+
+      <div id="bookResults"></div>
+
+      <button id="loadMore" class="hidden">
+        Load more books
+      </button>
+    </section>
+
+    <section>
+      <div class="section-heading">
+        <h2>My favourites</h2>
+        <span class="subtitle" id="favoriteCount">0 books</span>
+      </div>
+
+      <div id="favoriteResults"></div>
+    </section>
+  </main>
+
+  <script>
+    const searchForm = document.getElementById("searchForm");
+    const searchInput = document.getElementById("searchInput");
+    const searchBtn = document.getElementById("searchBtn");
+    const status = document.getElementById("status");
+    const bookResults = document.getElementById("bookResults");
+    const resultCount = document.getElementById("resultCount");
+    const loadMoreBtn = document.getElementById("loadMore");
+    const favoriteResults = document.getElementById("favoriteResults");
+    const favoriteCount = document.getElementById("favoriteCount");
+
+    let currentQuery = "";
+    let currentStart = 0;
+    let totalBooks = 0;
+    let isLoading = false;
+    let requestId = 0;
+
+    const PAGE_SIZE = 12;
+    const STORAGE_KEY = "bookFinderFavorites";
+
+    function getFavorites() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      } catch {
+        return [];
+      }
+    }
+
+    function saveFavorites(favorites) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
+    }
+
+    function getBookId(book) {
+      return book.key;
+    }
+
+    function getCover(book) {
+      if (book.cover_i) {
+        return `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`;
+      }
+
+      return "";
+    }
+
+    function createBookCard(book, isFavorite = false) {
+      const card = document.createElement("article");
+      card.className = "book-card";
+
+      const cover = document.createElement("img");
+      cover.className = "cover";
+      cover.alt = "Book cover: " + book.title;
+      cover.loading = "lazy";
+
+      const coverUrl = getCover(book);
+
+      if (coverUrl) {
+        cover.src = coverUrl;
+
+        cover.addEventListener("error", () => {
+          cover.removeAttribute("src");
+          cover.alt = "Cover unavailable";
+        }, { once: true });
+      } else {
+        cover.alt = "No cover available";
+      }
+
+      const title = document.createElement("h3");
+      title.textContent = book.title || "Untitled";
+
+      const author = document.createElement("p");
+      author.className = "author";
+      author.textContent =
+        "Author: " + (book.author_name?.join(", ") || "Unknown");
+
+      const year = document.createElement("p");
+      year.className = "author";
+      year.textContent =
+        "First published: " + (book.first_publish_year || "Unknown");
+
+      const link = document.createElement("a");
+      link.href = "https://openlibrary.org" + book.key;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = "View book details ↗";
+
+      card.append(cover, title, author, year, link);
+
+      const favoriteBtn = document.createElement("button");
+
+      if (isFavorite) {
+        favoriteBtn.className = "remove-btn";
+        favoriteBtn.textContent = "Remove favourite";
+
+        favoriteBtn.addEventListener("click", () => {
+          const favorites = getFavorites().filter(
+            item => getBookId(item) !== getBookId(book)
+          );
+
+          saveFavorites(favorites);
+          renderFavorites();
+        });
+      } else {
+        favoriteBtn.textContent = "♡ Add to favourites";
+
+        favoriteBtn.addEventListener("click", () => {
+          const favorites = getFavorites();
+
+          if (favorites.some(item => getBookId(item) === getBookId(book))) {
+            status.textContent = "This book is already in your favourites.";
+            return;
+          }
+
+          favorites.push({
+            key: book.key,
+            title: book.title,
+            author_name: book.author_name || [],
+            first_publish_year: book.first_publish_year || null,
+            cover_i: book.cover_i || null
+          });
+
+          saveFavorites(favorites);
+          renderFavorites();
+          status.textContent = "Book added to favourites.";
+        });
+      }
+
+      card.append(favoriteBtn);
+      return card;
+    }
+
+    async function searchBooks(query, append = false) {
+      query = query.trim();
+
+      if (!query || isLoading) return;
+
+      if (!append) {
+        currentQuery = query;
+        currentStart = 0;
+        requestId++;
+        bookResults.replaceChildren();
+        loadMoreBtn.classList.add("hidden");
+      }
+
+      isLoading = true;
+      const thisRequest = requestId;
+
+      searchBtn.disabled = true;
+      loadMoreBtn.disabled = true;
+      status.textContent = "Searching for books...";
+
+      try {
+        const url =
+          "https://openlibrary.org/search.json?q=" +
+          encodeURIComponent(currentQuery) +
+          "&limit=" + PAGE_SIZE +
+          "&offset=" + currentStart;
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error("Unable to retrieve books.");
+        }
+
+        const data = await response.json();
+
+        if (thisRequest !== requestId) return;
+
+        totalBooks = data.numFound || 0;
+
+        const books = (data.docs || []).filter(book => book.key);
+
+        if (!append) {
+          bookResults.replaceChildren();
+        }
+
+        books.forEach(book => {
+          bookResults.append(createBookCard(book));
+        });
+
+        currentStart += books.length;
+
+        resultCount.textContent =
+          totalBooks.toLocaleString() + " books found";
+
+        if (bookResults.children.length === 0) {
+          status.textContent = "No books found. Try another search.";
+        } else {
+          status.textContent =
+            "Showing " + bookResults.children.length + " books.";
+        }
+
+        loadMoreBtn.classList.toggle(
+          "hidden",
+          currentStart >= totalBooks || books.length === 0
+        );
+      } catch (error) {
+        if (thisRequest === requestId) {
+          status.textContent =
+            "Something went wrong. Please try again.";
+        }
+      } finally {
+        isLoading = false;
+        searchBtn.disabled = false;
+        loadMoreBtn.disabled = false;
+      }
+    }
+
+    function renderFavorites() {
+      const favorites = getFavorites();
+
+      favoriteResults.replaceChildren();
+      favoriteCount.textContent =
+        favorites.length + (favorites.length === 1 ? " book" : " books");
+
+      if (favorites.length === 0) {
+        const empty = document.createElement("p");
+        empty.className = "empty";
+        empty.textContent =
+          "No favourites yet. Add a book from the search results.";
+        favoriteResults.append(empty);
+        return;
+      }
+
+      favorites.forEach(book => {
+        favoriteResults.append(createBookCard(book, true));
+      });
+    }
+
+    searchForm.addEventListener("submit", event => {
+      event.preventDefault();
+      searchBooks(searchInput.value);
+    });
+
+    loadMoreBtn.addEventListener("click", () => {
+      searchBooks(currentQuery, true);
+    });
+
+    renderFavorites();
+  </script>
+</body>
+</html>

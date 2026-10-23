@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Joke Fetcher</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; padding: 40px 20px;
+      font-family: Arial, sans-serif;
+      background: #fff; color: #202124;
+    }
+    main { max-width: 760px; margin: auto; }
+    h1 { font-size: 32px; letter-spacing: -1px; }
+    .muted { color: #6b7280; line-height: 1.6; }
+    .card {
+      border: 1px solid #e5e7eb; border-radius: 14px;
+      padding: 24px; margin: 24px 0;
+      box-shadow: 0 4px 16px #00000008;
+    }
+    .punchline {
+      background: #f8fafc; border-left: 3px solid #2563eb;
+      padding: 14px; line-height: 1.7;
+    }
+    button {
+      border: 1px solid #d1d5db; background: white;
+      padding: 11px 16px; border-radius: 8px;
+      cursor: pointer; font-weight: 600; margin: 5px 5px 5px 0;
+    }
+    button.primary { background: #2563eb; color: white; border-color: #2563eb; }
+    button:disabled { opacity: .5; cursor: not-allowed; }
+    .favorite { padding: 12px 0; border-bottom: 1px solid #eee; }
+    #status { min-height: 24px; color: #4b5563; }
+  </style>
+</head>
+<body>
+<main>
+  <p class="muted">WEEK 06 / TASK 01</p>
+  <h1>Random Joke Fetcher</h1>
+  <p class="muted">Get a random joke and save your favourites.</p>
+
+  <section class="card">
+    <h2>Today's joke</h2>
+    <p id="setup">Click the button to load a joke.</p>
+    <p id="punchline" class="punchline">Your punchline will appear here.</p>
+    <button class="primary" id="loadBtn">Load joke</button>
+    <button id="saveBtn" disabled>♥ Save favourite</button>
+    <p id="status" role="status"></p>
+  </section>
+
+  <section class="card">
+    <h2>Favourite jokes</h2>
+    <div id="favoritesList"><p class="muted">No favourites saved yet.</p></div>
+  </section>
+</main>
+
+<script>
+  const setupEl = document.getElementById("setup");
+  const punchlineEl = document.getElementById("punchline");
+  const statusEl = document.getElementById("status");
+  const loadBtn = document.getElementById("loadBtn");
+  const saveBtn = document.getElementById("saveBtn");
+  const favoritesList = document.getElementById("favoritesList");
+  let currentJoke = null;
+
+  function getFavorites() {
+    try {
+      return JSON.parse(localStorage.getItem("favoriteJokes") || "[]");
+    } catch {
+      return [];
+    }
+  }
+
+  function renderFavorites() {
+    const favorites = getFavorites();
+    favoritesList.replaceChildren();
+
+    if (!favorites.length) {
+      favoritesList.textContent = "No favourites saved yet.";
+      favoritesList.className = "muted";
+      return;
+    }
+
+    favoritesList.className = "";
+    favorites.forEach((joke, index) => {
+      const item = document.createElement("div");
+      item.className = "favorite";
+      const title = document.createElement("strong");
+      title.textContent = joke.setup;
+      const punchline = document.createElement("p");
+      punchline.textContent = joke.punchline;
+      const remove = document.createElement("button");
+      remove.textContent = "Remove";
+      remove.addEventListener("click", () => {
+        const updated = getFavorites();
+        updated.splice(index, 1);
+        localStorage.setItem("favoriteJokes", JSON.stringify(updated));
+        renderFavorites();
+      });
+      item.append(title, punchline, remove);
+      favoritesList.append(item);
+    });
+  }
+
+  async function loadJoke() {
+    loadBtn.disabled = true;
+    saveBtn.disabled = true;
+    statusEl.textContent = "Loading...";
+    setupEl.textContent = "Loading joke...";
+    punchlineEl.textContent = "";
+
+    try {
+      const response = await fetch(
+        "https://official-joke-api.appspot.com/random_joke"
+      );
+      if (!response.ok) throw new Error("Request failed");
+
+      const joke = await response.json();
+      if (!joke.setup || !joke.punchline) throw new Error("Invalid joke");
+
+      currentJoke = {
+        id: joke.id,
+        setup: joke.setup,
+        punchline: joke.punchline
+      };
+      setupEl.textContent = joke.setup;
+      punchlineEl.textContent = joke.punchline;
+      statusEl.textContent = "Joke loaded successfully.";
+      saveBtn.disabled = false;
+    } catch (error) {
+      currentJoke = null;
+      setupEl.textContent = "Unable to load a joke.";
+      punchlineEl.textContent = "Please check your internet connection and try again.";
+      statusEl.textContent = "Something went wrong.";
+    } finally {
+      loadBtn.disabled = false;
+    }
+  }
+
+  function saveFavorite() {
+    if (!currentJoke) return;
+    const favorites = getFavorites();
+    if (favorites.some(j => j.id === currentJoke.id)) {
+      statusEl.textContent = "This joke is already saved.";
+      return;
+    }
+    favorites.push(currentJoke);
+    localStorage.setItem("favoriteJokes", JSON.stringify(favorites));
+    statusEl.textContent = "Added to favourites.";
+    renderFavorites();
+  }
+
+  loadBtn.addEventListener("click", loadJoke);
+  saveBtn.addEventListener("click", saveFavorite);
+  renderFavorites();
+</script>
+</body>
+</html>
