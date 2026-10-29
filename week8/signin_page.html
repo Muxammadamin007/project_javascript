@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In | Week 8</title>
+
+  <style>
+    :root {
+      --page: #f5f4ee;
+      --surface: #fffefa;
+      --soft: #f9f8f2;
+      --ink: #202a27;
+      --muted: #747d76;
+      --line: #e4e6dc;
+      --accent: #286b59;
+      --accent-dark: #1d5143;
+      --soft-green: #e8f2eb;
+      --coral: #e98f70;
+      --success: #256c4a;
+      --shadow: 0 20px 60px rgb(34 54 44 / 9%);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 30px 18px;
+      background:
+        radial-gradient(ellipse at 5% 3%, #f8e5dc, transparent 30rem),
+        radial-gradient(ellipse at 95% 30%, #e1eee4, transparent 30rem),
+        var(--page);
+      color: var(--ink);
+      font-family: "Segoe UI", Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--accent-dark);
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--coral);
+    }
+
+    .container {
+      width: min(100%, 950px);
+      margin: 0 auto;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 28px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .sidebar {
+      display: flex;
+      min-height: 560px;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 38px;
+      background: var(--accent);
+      color: white;
+    }
+
+    .tag {
+      margin: 0 0 18px;
+      color: #d6e9df;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .sidebar h1 {
+      margin: 0;
+      font-family: Georgia, serif;
+      font-size: clamp(36px, 5vw, 54px);
+      font-weight: 500;
+      line-height: 1.12;
+    }
+
+    .sidebar h1 span {
+      color: #f8c1a7;
+      font-style: italic;
+    }
+
+    .sidebar p {
+      color: #e0eee6;
+      font-size: 14px;
+    }
+
+    .sidebar-footer {
+      margin-top: 45px;
+      font-size: 12px;
+      color: #d6e9df;
+    }
+
+    .form-area {
+      padding: clamp(25px, 5vw, 45px);
+    }
+
+    .form-area h2 {
+      margin: 0;
+      font-family: Georgia, serif;
+      font-size: 34px;
+      font-weight: 500;
+    }
+
+    .intro {
+      margin: 8px 0 28px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .field {
+      margin-bottom: 19px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      min-height: 48px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--soft);
+      color: var(--ink);
+      font: inherit;
+      font-size: 14px;
+      transition: 0.2s;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+      outline: 3px solid #286b5920;
+    }
+
+    input::placeholder {
+      color: #969d96;
+    }
+
+    .options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 3px 0 22px;
+    }
+
+    .remember {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .remember input {
+      accent-color: var(--accent);
+    }
+
+    .forgot {
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .submit-btn {
+      width: 100%;
+      min-height: 49px;
+      border: 0;
+      border-radius: 10px;
+      background: var(--accent);
+      color: white;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .submit-btn:hover {
+      background: var(--accent-dark);
+      transform: translateY(-2px);
+    }
+
+    .message {
+      display: none;
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 9px;
+      background: var(--soft-green);
+      color: var(--success);
+      font-size: 13px;
+    }
+
+    .signup {
+      margin-top: 25px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .signup a {
+      font-weight: 800;
+    }
+
+    .security {
+      margin-top: 25px;
+      color: var(--muted);
+      font-size: 11px;
+      text-align: center;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid var(--coral);
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 650px) {
+      body {
+        padding: 20px 12px;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        min-height: 260px;
+        padding: 28px;
+      }
+
+      .sidebar h1 {
+        font-size: 38px;
+      }
+
+      .sidebar-footer {
+        margin-top: 25px;
+      }
+
+      .form-area {
+        padding: 27px 22px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+
+    <a class="back" href="../index.html">← Back to Week 8</a>
+
+    <section class="layout">
+
+      <aside class="sidebar">
+        <div>
+          <p class="tag">WELCOME BACK</p>
+          <h1>Your next step<br>starts <span>here.</span></h1>
+          <p>Sign in to continue exploring your learning journey.</p>
+        </div>
+
+        <div class="sidebar-footer">
+          WEEK 08 · FORM DESIGN LAB
+        </div>
+      </aside>
+
+      <div class="form-area">
+        <h2>Sign in</h2>
+        <p class="intro">Enter your details to continue.</p>
+
+        <form id="loginForm">
+          <div class="field">
+            <label for="email">Email address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              required
+            >
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              minlength="6"
+              required
+            >
+          </div>
+
+          <div class="options">
+            <label class="remember">
+              <input type="checkbox" id="remember">
+              Remember me
+            </label>
+
+            <a class="forgot" href="#forgot">Forgot password?</a>
+          </div>
+
+          <button class="submit-btn" type="submit">
+            Sign In →
+          </button>
+
+          <div class="message" id="message" role="status"></div>
+        </form>
+
+        <p class="signup">
+          Don't have an account?
+          <a href="sample02.html">Create one</a>
+        </p>
+
+        <p class="security">
+          Demo form · Your information is not sent to a server.
+        </p>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById("loginForm");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      message.textContent =
+        "Form validated successfully! This is a demo sign-in page.";
+      message.style.display = "block";
+    });
+  </script>
+</body>
+</html>

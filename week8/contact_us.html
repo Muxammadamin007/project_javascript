@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Contact Us | Form Studio</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f6f8;
+      color: #252525;
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+    .form-page {
+      width: 100%;
+      max-width: 1050px;
+      margin: 0 auto;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 24px;
+      color: #555;
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .back:hover {
+      color: #b6684d;
+    }
+
+    .form-layout {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      background: #ffffff;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+    }
+
+    .form-aside {
+      background: #b6684d;
+      color: white;
+      padding: 48px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 650px;
+    }
+
+    .aside-kicker {
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 12px;
+      font-weight: bold;
+      opacity: 0.85;
+      margin-bottom: 20px;
+    }
+
+    .aside-content h2 {
+      font-size: 36px;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .aside-copy {
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .aside-bottom {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.85);
+      margin-top: 40px;
+    }
+
+    .aside-dots {
+      display: flex;
+      gap: 7px;
+      margin-bottom: 14px;
+    }
+
+    .aside-dots span {
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+    }
+
+    .form-main {
+      padding: 48px 42px;
+    }
+
+    .eyebrow {
+      color: #b6684d;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
+    .form-main h1 {
+      font-size: 34px;
+      letter-spacing: -1px;
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+
+    .form-intro {
+      color: #777;
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #dedede;
+      border-radius: 8px;
+      background: #fcfcfc;
+      color: #252525;
+      font: inherit;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: #b6684d;
+      box-shadow: 0 0 0 3px rgba(182, 104, 77, 0.12);
+      background: #fff;
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 130px;
+    }
+
+    .submit-button {
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      background: #b6684d;
+      color: white;
+      padding: 14px 18px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .submit-button:hover {
+      background: #985139;
+      transform: translateY(-1px);
+    }
+
+    .submit-button span {
+      margin-left: 8px;
+      font-size: 18px;
+    }
+
+    .form-footnote {
+      text-align: center;
+      font-size: 12px;
+      color: #888;
+      margin-top: 14px;
+    }
+
+    .form-message {
+      margin-top: 14px;
+      color: #287548;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding: 24px 14px;
+      }
+
+      .form-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .form-aside {
+        min-height: auto;
+        padding: 32px 26px;
+      }
+
+      .aside-content h2 {
+        font-size: 29px;
+      }
+
+      .aside-bottom {
+        margin-top: 28px;
+      }
+
+      .form-main {
+        padding: 32px 26px;
+      }
+
+      .form-main h1 {
+        font-size: 29px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .form-main,
+      .form-aside {
+        padding: 26px 20px;
+      }
+
+      .form-main h1 {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="form-page">
+    <a class="back" href="../index.html">← Back to Week 8</a>
+
+    <section class="form-layout" aria-label="Contact us">
+
+      <aside class="form-aside">
+        <div class="aside-content">
+          <p class="aside-kicker">We’re all ears</p>
+          <h2>Let’s make something happen.</h2>
+          <p class="aside-copy">
+            Questions, ideas, or just saying hello?
+            Send us a note and we’ll be glad you did.
+          </p>
+        </div>
+
+        <div class="aside-bottom">
+          <div class="aside-dots" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          Thoughtful conversations start here
+        </div>
+      </aside>
+
+      <div class="form-main">
+        <p class="eyebrow">Get in touch</p>
+        <h1>Send us a note.</h1>
+        <p class="form-intro">
+          Fill in the details and leave the rest to us.
+        </p>
+
+        <form id="contactForm">
+          <div class="field">
+            <label for="senderName">Your name</label>
+            <input
+              type="text"
+              id="senderName"
+              name="name"
+              autocomplete="name"
+              required
+              minlength="2"
+              placeholder="How should we address you?"
+            >
+          </div>
+
+          <div class="field">
+            <label for="senderEmail">Email address</label>
+            <input
+              type="email"
+              id="senderEmail"
+              name="email"
+              autocomplete="email"
+              required
+              placeholder="you@example.com"
+            >
+          </div>
+
+          <div class="field">
+            <label for="subject">Subject</label>
+            <input
+              type="text"
+              id="subject"
+              name="subject"
+              required
+              minlength="3"
+              placeholder="What’s on your mind?"
+            >
+          </div>
+
+          <div class="field">
+            <label for="message">Your message</label>
+            <textarea
+              id="message"
+              name="message"
+              required
+              minlength="10"
+              rows="5"
+              placeholder="Share a few details (at least 10 characters)..."
+            ></textarea>
+          </div>
+
+          <button class="submit-button" type="submit">
+            Send message <span aria-hidden="true">→</span>
+          </button>
+
+          <p class="form-footnote">
+            This is a demo form — nothing will be sent.
+          </p>
+
+          <p
+            id="contactMessage"
+            class="form-message"
+            role="status"
+            aria-live="polite"
+          ></p>
+        </form>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    document
+      .getElementById("contactForm")
+      .addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const name = document.getElementById("senderName").value.trim();
+
+        document.getElementById("contactMessage").textContent =
+          `Thanks, ${name} — your demo message is ready.`;
+      });
+  </script>
+</body>
+</html>

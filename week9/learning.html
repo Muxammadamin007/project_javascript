@@ -1,0 +1,968 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Lab Enrollment | Week 9</title>
+
+  <style>
+    :root {
+      --bg: #f1f3f8;
+      --paper: #ffffff;
+      --ink: #191c2d;
+      --muted: #777d91;
+      --line: #e4e7ef;
+      --accent: #635bdf;
+      --accent-hover: #4f47c7;
+      --accent-pale: #eeedff;
+      --error: #d43d58;
+      --success: #23845b;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 32px 20px 60px;
+      background:
+        linear-gradient(135deg, #f8f9ff 0%, transparent 48%),
+        var(--bg);
+      color: var(--ink);
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    a:focus-visible {
+      outline: 3px solid #aaa5ff;
+      outline-offset: 3px;
+    }
+
+    .form-page {
+      width: min(100%, 940px);
+      margin: 0 auto;
+    }
+
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .back:hover {
+      color: var(--accent);
+    }
+
+    .back span {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--paper);
+    }
+
+    .form-layout {
+      display: grid;
+      grid-template-columns: 225px minmax(0, 1fr);
+      align-items: stretch;
+      gap: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--paper);
+      box-shadow: 0 24px 70px rgb(28 34 67 / 8%);
+    }
+
+    /* New vertical progress navigation */
+
+    .form-aside {
+      padding: 30px 21px;
+      background: #202238;
+      color: #fff;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 43px;
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      border-radius: 12px;
+      background: #8279ff;
+      font-size: 19px;
+    }
+
+    .aside-kicker {
+      margin: 0 0 12px;
+      color: #a9a9c8;
+      font-size: 10px;
+      font-weight: 750;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+    }
+
+    .form-aside h2 {
+      margin: 0;
+      font-size: 27px;
+      line-height: 1.2;
+      letter-spacing: -1px;
+    }
+
+    .aside-copy {
+      margin: 13px 0 31px;
+      color: #b9bbd0;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .step-list {
+      display: grid;
+      gap: 22px;
+    }
+
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      color: #c2c3d6;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .step-number {
+      display: grid;
+      width: 27px;
+      height: 27px;
+      flex: 0 0 27px;
+      place-items: center;
+      border: 1px solid #50516d;
+      border-radius: 9px;
+      color: #e1e0ff;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .step.active .step-number {
+      border-color: #8279ff;
+      background: #8279ff;
+      color: white;
+    }
+
+    .step strong {
+      display: block;
+      margin-bottom: 3px;
+      color: #fff;
+      font-size: 12px;
+    }
+
+    .aside-note {
+      margin-top: 40px;
+      padding-top: 18px;
+      border-top: 1px solid #3b3d57;
+      color: #aaaac3;
+      font-size: 10px;
+      line-height: 1.8;
+    }
+
+    /* Main form */
+
+    .form-main {
+      min-width: 0;
+      padding: 34px clamp(22px, 4vw, 42px);
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: 1.7px;
+      text-transform: uppercase;
+    }
+
+    .form-main h1,
+    .success-card h1 {
+      margin: 0;
+      font-size: clamp(27px, 4vw, 36px);
+      letter-spacing: -1.3px;
+      line-height: 1.2;
+    }
+
+    .form-intro {
+      margin: 10px 0 27px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .form-section {
+      margin: 0 0 25px;
+      padding: 0;
+      border: 0;
+    }
+
+    .form-section legend {
+      width: 100%;
+      margin-bottom: 17px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 15px;
+    }
+
+    .field {
+      min-width: 0;
+      margin-bottom: 15px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 11px;
+      font-weight: 750;
+    }
+
+    .field-hint {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    .field input,
+    .field select {
+      display: block;
+      width: 100%;
+      min-height: 44px;
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fafbfe;
+      color: var(--ink);
+      font-size: 12px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    .field input::placeholder {
+      color: #a4a8b8;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--accent);
+      outline: none;
+      box-shadow: 0 0 0 3px rgb(99 91 223 / 12%);
+    }
+
+    .field input.is-valid,
+    .field select.is-valid {
+      border-color: var(--success);
+    }
+
+    .field input.is-invalid,
+    .field select.is-invalid {
+      border-color: var(--error);
+    }
+
+    .error-msg {
+      margin: 0;
+      color: var(--error);
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+    .error-msg:not(:empty) {
+      margin-top: 5px;
+    }
+
+    .checkbox-wrap {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 2px 0 8px;
+    }
+
+    .checkbox-wrap input {
+      width: 16px;
+      height: 16px;
+      flex: 0 0 16px;
+      margin: 2px 0 0;
+      accent-color: var(--accent);
+    }
+
+    .checkbox-wrap label {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.6;
+      cursor: pointer;
+    }
+
+    .terms-error {
+      margin-left: 26px;
+    }
+
+    .submit-button {
+      display: flex;
+      width: 100%;
+      min-height: 47px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 20px;
+      padding: 12px 16px;
+      border: 0;
+      border-radius: 10px;
+      background: var(--accent);
+      color: white;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background .2s, transform .2s;
+    }
+
+    .submit-button:hover {
+      transform: translateY(-1px);
+      background: var(--accent-hover);
+    }
+
+    .submit-button span {
+      font-size: 18px;
+    }
+
+    .form-footnote {
+      margin: 13px 0 0;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    /* Success view */
+
+    .success-card {
+      max-width: 650px;
+      margin: 0 auto;
+      padding: clamp(25px, 6vw, 50px);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--paper);
+      box-shadow: 0 24px 70px rgb(28 34 67 / 8%);
+    }
+
+    .success-mark {
+      display: grid;
+      width: 54px;
+      height: 54px;
+      margin-bottom: 22px;
+      place-items: center;
+      border-radius: 16px;
+      background: #e5f7ed;
+      color: #23845b;
+      font-size: 25px;
+      font-weight: 800;
+    }
+
+    .success-card > p:not(.eyebrow) {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .summary-box {
+      margin: 23px 0;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 13px 15px;
+      border-bottom: 1px solid var(--line);
+      font-size: 12px;
+    }
+
+    .summary-row:last-child {
+      border-bottom: 0;
+    }
+
+    .summary-row dt {
+      color: var(--muted);
+    }
+
+    .summary-row dd {
+      margin: 0;
+      font-weight: 750;
+      text-align: right;
+      overflow-wrap: anywhere;
+    }
+
+    .reset-button {
+      min-height: 43px;
+      padding: 11px 15px;
+      border: 0;
+      border-radius: 9px;
+      background: var(--accent);
+      color: white;
+      font-size: 12px;
+      font-weight: 750;
+      cursor: pointer;
+    }
+
+    .reset-button:hover {
+      background: var(--accent-hover);
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media (max-width: 700px) {
+      body {
+        padding: 20px 12px 35px;
+      }
+
+      .form-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .form-aside {
+        padding: 22px;
+      }
+
+      .brand {
+        margin-bottom: 24px;
+      }
+
+      .form-aside h2 {
+        max-width: 450px;
+        font-size: 25px;
+      }
+
+      .aside-copy {
+        max-width: 460px;
+        margin-bottom: 20px;
+      }
+
+      .step-list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+      }
+
+      .step {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .aside-note {
+        margin-top: 22px;
+      }
+
+      .form-main {
+        padding: 27px 22px;
+      }
+    }
+
+    @media (max-width: 430px) {
+      .field-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .step-list {
+        grid-template-columns: 1fr;
+      }
+
+      .step {
+        flex-direction: row;
+        align-items: center;
+      }
+
+      .step-number {
+        flex-shrink: 0;
+      }
+
+      .summary-row {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .summary-row dd {
+        text-align: left;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="form-page">
+    <a class="back" href="../index.html">
+      <span aria-hidden="true">←</span>
+      Back to Week 9
+    </a>
+
+    <section class="form-layout" id="formContainer"
+      aria-label="Creative Coding Lab registration">
+
+      <aside class="form-aside">
+        <a href="../index.html" class="brand">
+          <span class="brand-mark">✳</span>
+          <span>CREATIVE LAB</span>
+        </a>
+
+        <div>
+          <p class="aside-kicker">Week 09 / Spring session</p>
+          <h2>Make room for your next big idea.</h2>
+          <p class="aside-copy">
+            One small step toward creating something original.
+            Complete the form to join the lab.
+          </p>
+        </div>
+
+        <div class="step-list">
+          <div class="step active">
+            <span class="step-number">01</span>
+            <div>
+              <strong>Your details</strong>
+              Personal information
+            </div>
+          </div>
+
+          <div class="step">
+            <span class="step-number">02</span>
+            <div>
+              <strong>Choose a track</strong>
+              Find your interests
+            </div>
+          </div>
+
+          <div class="step">
+            <span class="step-number">03</span>
+            <div>
+              <strong>Get started</strong>
+              Confirm your place
+            </div>
+          </div>
+        </div>
+
+        <div class="aside-note">
+          JSK0126002 · Web Programming<br>
+          Learn by making. Improve by trying.
+        </div>
+      </aside>
+
+      <div class="form-main">
+        <p class="eyebrow">Registration portal</p>
+        <h1>Join the lab.</h1>
+        <p class="form-intro">
+          Enter your information below to reserve your place.
+          Fields will be checked as you complete them.
+        </p>
+
+        <form id="regForm" novalidate>
+          <fieldset class="form-section">
+            <legend>01 — Personal details</legend>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="studentId">
+                  Campus ID <span class="field-hint">(9 digits)</span>
+                </label>
+                <input type="text" id="studentId" name="studentId"
+                  inputmode="numeric" autocomplete="off"
+                  placeholder="e.g. 202612345"
+                  aria-describedby="idError" aria-invalid="false">
+                <p id="idError" class="error-msg" aria-live="polite"></p>
+              </div>
+
+              <div class="field">
+                <label for="fullName">Your name</label>
+                <input type="text" id="fullName" name="fullName"
+                  autocomplete="name" placeholder="First and last name"
+                  aria-describedby="nameError" aria-invalid="false">
+                <p id="nameError" class="error-msg" aria-live="polite"></p>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="track">Choose your lab track</label>
+              <select id="track" name="track"
+                aria-describedby="trackError" aria-invalid="false">
+                <option value="">Select a track</option>
+                <option value="Creative Web Design">Creative Web Design</option>
+                <option value="Generative Art">Generative Art</option>
+                <option value="Interactive Experiences">Interactive Experiences</option>
+                <option value="Digital Prototyping">Digital Prototyping</option>
+              </select>
+              <p id="trackError" class="error-msg" aria-live="polite"></p>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-section">
+            <legend>02 — Account details</legend>
+
+            <div class="field">
+              <label for="email">Email address</label>
+              <input type="email" id="email" name="email"
+                autocomplete="email" placeholder="you@example.edu"
+                aria-describedby="emailError" aria-invalid="false">
+              <p id="emailError" class="error-msg" aria-live="polite"></p>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="password">Create a password</label>
+                <input type="password" id="password" name="password"
+                  autocomplete="new-password"
+                  placeholder="At least 8 characters"
+                  aria-describedby="passwordError" aria-invalid="false">
+                <p id="passwordError" class="error-msg" aria-live="polite"></p>
+              </div>
+
+              <div class="field">
+                <label for="confirmPassword">Confirm password</label>
+                <input type="password" id="confirmPassword"
+                  name="confirmPassword" autocomplete="new-password"
+                  placeholder="Type it again"
+                  aria-describedby="confirmError" aria-invalid="false">
+                <p id="confirmError" class="error-msg" aria-live="polite"></p>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="checkbox-wrap">
+            <input type="checkbox" id="agreeTerms" name="agreeTerms"
+              aria-describedby="termsError" aria-invalid="false">
+            <label for="agreeTerms">
+              I agree to the Creative Coding Lab participation guidelines.
+            </label>
+          </div>
+          <p id="termsError" class="error-msg terms-error"
+            aria-live="polite"></p>
+
+          <button type="submit" class="submit-button">
+            <span style="font-size:12px">Reserve my spot</span>
+            <span aria-hidden="true">→</span>
+          </button>
+
+          <p class="form-footnote">
+            Demo only. Your details are shown only in this page's confirmation.
+          </p>
+        </form>
+      </div>
+    </section>
+
+    <section id="successCard" class="success-card"
+      aria-labelledby="successHeading" tabindex="-1" hidden>
+      <div class="success-mark" aria-hidden="true">✓</div>
+      <p class="eyebrow">Registration complete</p>
+      <h1 id="successHeading">You're on the list.</h1>
+      <p>Your demo registration is complete. Review your submitted details below.</p>
+      <dl id="summaryDetails" class="summary-box"></dl>
+      <button type="button" class="reset-button" id="resetButton">
+        Register another maker
+      </button>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById('regForm');
+    const idInput = document.getElementById('studentId');
+    const nameInput = document.getElementById('fullName');
+    const trackInput = document.getElementById('track');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const confirmInput = document.getElementById('confirmPassword');
+    const termsInput = document.getElementById('agreeTerms');
+    const formContainer = document.getElementById('formContainer');
+    const successCard = document.getElementById('successCard');
+    const summaryDetails = document.getElementById('summaryDetails');
+    const touchedFields = new Set();
+
+    function markValid(input, errorId) {
+      input.classList.remove('is-invalid');
+      input.classList.add('is-valid');
+      input.setAttribute('aria-invalid', 'false');
+      document.getElementById(errorId).textContent = '';
+      return true;
+    }
+
+    function markInvalid(input, errorId, message) {
+      input.classList.remove('is-valid');
+      input.classList.add('is-invalid');
+      input.setAttribute('aria-invalid', 'true');
+      document.getElementById(errorId).textContent = message;
+      return false;
+    }
+
+    function checkId() {
+      const value = idInput.value.trim();
+
+      if (!value) {
+        return markInvalid(idInput, 'idError', 'Enter your campus ID.');
+      }
+
+      if (!/^\d{9}$/.test(value)) {
+        return markInvalid(
+          idInput,
+          'idError',
+          'Your campus ID must be exactly 9 digits.'
+        );
+      }
+
+      return markValid(idInput, 'idError');
+    }
+
+    function checkName() {
+      const value = nameInput.value.trim();
+
+      if (!value) {
+        return markInvalid(nameInput, 'nameError', 'Tell us your name.');
+      }
+
+      if (value.length < 2) {
+        return markInvalid(
+          nameInput,
+          'nameError',
+          'Your name must be at least 2 characters.'
+        );
+      }
+
+      return markValid(nameInput, 'nameError');
+    }
+
+    function checkTrack() {
+      if (!trackInput.value) {
+        return markInvalid(
+          trackInput,
+          'trackError',
+          'Choose the lab track you’re interested in.'
+        );
+      }
+
+      return markValid(trackInput, 'trackError');
+    }
+
+    function checkEmail() {
+      const value = emailInput.value.trim();
+
+      if (!value) {
+        return markInvalid(
+          emailInput,
+          'emailError',
+          'Enter your email address.'
+        );
+      }
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        return markInvalid(
+          emailInput,
+          'emailError',
+          'Enter a valid email address, like you@example.edu.'
+        );
+      }
+
+      return markValid(emailInput, 'emailError');
+    }
+
+    function checkPassword() {
+      if (!passwordInput.value) {
+        return markInvalid(
+          passwordInput,
+          'passwordError',
+          'Create a password to continue.'
+        );
+      }
+
+      if (passwordInput.value.length < 8) {
+        return markInvalid(
+          passwordInput,
+          'passwordError',
+          'Use at least 8 characters for your password.'
+        );
+      }
+
+      markValid(passwordInput, 'passwordError');
+
+      if (touchedFields.has(confirmInput)) {
+        checkConfirm();
+      }
+
+      return true;
+    }
+
+    function checkConfirm() {
+      if (!confirmInput.value) {
+        return markInvalid(
+          confirmInput,
+          'confirmError',
+          'Type your password one more time.'
+        );
+      }
+
+      if (confirmInput.value !== passwordInput.value) {
+        return markInvalid(
+          confirmInput,
+          'confirmError',
+          'These passwords don’t match yet.'
+        );
+      }
+
+      return markValid(confirmInput, 'confirmError');
+    }
+
+    function checkTerms() {
+      const error = document.getElementById('termsError');
+
+      if (!termsInput.checked) {
+        termsInput.setAttribute('aria-invalid', 'true');
+        error.textContent =
+          'Please agree to the participation guidelines to register.';
+        return false;
+      }
+
+      termsInput.setAttribute('aria-invalid', 'false');
+      error.textContent = '';
+      return true;
+    }
+
+    const fieldChecks = new Map([
+      [idInput, checkId],
+      [nameInput, checkName],
+      [trackInput, checkTrack],
+      [emailInput, checkEmail],
+      [passwordInput, checkPassword],
+      [confirmInput, checkConfirm]
+    ]);
+
+    for (const [input, check] of fieldChecks) {
+      input.addEventListener('blur', () => {
+        touchedFields.add(input);
+        check();
+      });
+
+      input.addEventListener(
+        input === trackInput ? 'change' : 'input',
+        () => {
+          if (touchedFields.has(input)) {
+            check();
+          }
+        }
+      );
+    }
+
+    termsInput.addEventListener('change', checkTerms);
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      for (const input of fieldChecks.keys()) {
+        touchedFields.add(input);
+      }
+
+      const checks = [...fieldChecks.values()].map(check => check());
+      const termsValid = checkTerms();
+      const valid = checks.every(Boolean) && termsValid;
+
+      if (!valid) {
+        const firstInvalid = form.querySelector('[aria-invalid="true"]');
+        firstInvalid?.focus();
+        return;
+      }
+
+      const details = [
+        ['Campus ID', idInput.value.trim()],
+        ['Name', nameInput.value.trim()],
+        ['Lab track', trackInput.value],
+        ['Email', emailInput.value.trim()]
+      ];
+
+      summaryDetails.replaceChildren(
+        ...details.map(([label, value]) => {
+          const row = document.createElement('div');
+          row.className = 'summary-row';
+
+          const term = document.createElement('dt');
+          term.textContent = label;
+
+          const description = document.createElement('dd');
+          description.textContent = value;
+
+          row.append(term, description);
+          return row;
+        })
+      );
+
+      formContainer.hidden = true;
+      successCard.hidden = false;
+      successCard.focus();
+    });
+
+    document.getElementById('resetButton').addEventListener('click', () => {
+      form.reset();
+      touchedFields.clear();
+
+      for (const input of [...fieldChecks.keys(), termsInput]) {
+        input.classList.remove('is-valid', 'is-invalid');
+        input.setAttribute('aria-invalid', 'false');
+      }
+
+      for (const error of form.querySelectorAll('.error-msg')) {
+        error.textContent = '';
+      }
+
+      summaryDetails.replaceChildren();
+      successCard.hidden = true;
+      formContainer.hidden = false;
+      idInput.focus();
+    });
+  </script>
+</body>
+</html>

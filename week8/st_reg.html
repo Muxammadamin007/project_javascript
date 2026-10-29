@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Registration | Week 8</title>
+
+  <style>
+    :root {
+      --page: #f5f4ee;
+      --surface: #fffefa;
+      --ink: #202a27;
+      --muted: #747d76;
+      --line: #e4e6dc;
+      --accent: #286b59;
+      --accent-dark: #1d5143;
+      --soft: #e8f2eb;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 30px 18px;
+      background:
+        radial-gradient(ellipse at top left, #f5dfd4, transparent 35%),
+        var(--page);
+      color: var(--ink);
+      font: 15px/1.6 "Segoe UI", Arial, sans-serif;
+    }
+
+    .form-page {
+      width: min(100%, 1000px);
+      margin: auto;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 25px;
+      color: var(--accent-dark);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .back:hover {
+      text-decoration: underline;
+    }
+
+    .registration-layout {
+      display: grid;
+      grid-template-columns: 0.7fr 1.3fr;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--surface);
+      box-shadow: 0 20px 60px rgb(34 54 44 / 9%);
+    }
+
+    .form-aside {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 35px 28px;
+      background: var(--accent);
+      color: white;
+    }
+
+    .aside-kicker {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+
+    .form-aside h2 {
+      margin: 35px 0 15px;
+      font: 500 40px/1.15 Georgia, serif;
+    }
+
+    .form-aside p {
+      color: #e1eee6;
+    }
+
+    .aside-bottom {
+      margin-top: 35px;
+      font-size: 13px;
+      opacity: 0.8;
+    }
+
+    .form-main {
+      padding: 35px;
+    }
+
+    .form-main h1 {
+      margin: 0;
+      font: 500 clamp(28px, 4vw, 38px)/1.2 Georgia, serif;
+    }
+
+    .intro {
+      margin: 8px 0 25px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .form-section {
+      margin: 0 0 23px;
+      padding: 0;
+      border: 0;
+    }
+
+    .form-section legend {
+      width: 100%;
+      margin-bottom: 15px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--line);
+      color: var(--accent-dark);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .field {
+      min-width: 0;
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    input:not([type="checkbox"]):not([type="range"]),
+    select,
+    textarea {
+      width: 100%;
+      min-height: 45px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #f9f8f2;
+      color: var(--ink);
+      font: inherit;
+      font-size: 14px;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: 2px solid #a4cbbb;
+      border-color: var(--accent);
+    }
+
+    .range-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    input[type="range"] {
+      flex: 1;
+      accent-color: var(--accent);
+    }
+
+    .range-value {
+      min-width: 45px;
+      color: var(--accent-dark);
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .terms {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      margin: 5px 0 20px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .terms input {
+      margin-top: 5px;
+      accent-color: var(--accent);
+    }
+
+    .submit-button {
+      width: 100%;
+      min-height: 48px;
+      border: none;
+      border-radius: 9px;
+      background: var(--accent);
+      color: white;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .submit-button:hover {
+      background: var(--accent-dark);
+      transform: translateY(-2px);
+    }
+
+    .form-message {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 9px;
+      background: var(--soft);
+      color: var(--accent-dark);
+      font-size: 14px;
+    }
+
+    .form-message:empty {
+      display: none;
+    }
+
+    .form-footnote {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .form-footnote a {
+      color: var(--accent-dark);
+      font-weight: 700;
+    }
+
+    @media (max-width: 700px) {
+      .registration-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .form-aside {
+        padding: 25px;
+      }
+
+      .form-aside h2 {
+        margin: 20px 0 10px;
+        font-size: 32px;
+      }
+
+      .aside-bottom {
+        margin-top: 20px;
+      }
+
+      .form-main {
+        padding: 25px 20px;
+      }
+    }
+
+    @media (max-width: 450px) {
+      .field-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="form-page">
+
+    <a class="back" href="../index.html">Back to Week 8</a>
+
+    <div class="registration-layout">
+
+      <aside class="form-aside">
+        <div>
+          <div class="aside-kicker">Form Studio · 02</div>
+          <h2>Your next chapter starts here.</h2>
+          <p>
+            Create your student profile and share a little
+            about your academic interests.
+          </p>
+        </div>
+
+        <div class="aside-bottom">
+          STUDENT REGISTRATION<br>
+          Learn · Explore · Grow
+        </div>
+      </aside>
+
+      <section class="form-main">
+        <h1>Student registration</h1>
+        <p class="intro">
+          Complete the form below to create your student profile.
+        </p>
+
+        <form id="registrationForm">
+
+          <fieldset class="form-section">
+            <legend>Personal information</legend>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="firstName">First name *</label>
+                <input
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  placeholder="e.g. Alex"
+                  required
+                >
+              </div>
+
+              <div class="field">
+                <label for="lastName">Last name *</label>
+                <input
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  placeholder="e.g. Kim"
+                  required
+                >
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="email">Email address *</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="alex@example.com"
+                  required
+                >
+              </div>
+
+              <div class="field">
+                <label for="phone">Phone number</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="+82 10-0000-0000"
+                >
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="birthDate">Date of birth *</label>
+                <input
+                  type="date"
+                  id="birthDate"
+                  name="birthDate"
+                  required
+                >
+              </div>
+
+              <div class="field">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender">
+                  <option value="">Select an option</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="prefer-not-to-say">Prefer not to say</option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-section">
+            <legend>Academic information</legend>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="studentId">Student ID *</label>
+                <input
+                  type="text"
+                  id="studentId"
+                  name="studentId"
+                  placeholder="Enter student ID"
+                  required
+                >
+              </div>
+
+              <div class="field">
+                <label for="department">Department *</label>
+                <select id="department" name="department" required>
+                  <option value="">Choose department</option>
+                  <option value="computer-engineering">Computer Engineering</option>
+                  <option value="business">Business Administration</option>
+                  <option value="design">Design</option>
+                  <option value="engineering">Other Engineering</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="year">Academic year *</label>
+                <select id="year" name="year" required>
+                  <option value="">Choose year</option>
+                  <option value="1">1st year</option>
+                  <option value="2">2nd year</option>
+                  <option value="3">3rd year</option>
+                  <option value="4">4th year</option>
+                  <option value="graduate">Graduate student</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="studyMode">Study mode</label>
+                <select id="studyMode" name="studyMode">
+                  <option value="">Choose mode</option>
+                  <option value="full-time">Full-time</option>
+                  <option value="part-time">Part-time</option>
+                  <option value="online">Online</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="interest">Academic interest</label>
+              <input
+                type="text"
+                id="interest"
+                name="interest"
+                placeholder="e.g. AI, Web Development, Data Science"
+              >
+            </div>
+
+            <div class="field">
+              <label for="level">How confident are you with technology?</label>
+              <div class="range-row">
+                <input
+                  type="range"
+                  id="level"
+                  name="level"
+                  min="1"
+                  max="10"
+                  value="5"
+                >
+                <output class="range-value" id="levelValue">5/10</output>
+              </div>
+            </div>
+          </fieldset>
+
+          <label class="terms">
+            <input type="checkbox" id="terms" required>
+            <span>
+              I confirm that the information provided is correct. *
+            </span>
+          </label>
+
+          <button class="submit-button" type="submit">
+            Create student profile →
+          </button>
+
+          <p class="form-message" id="formMessage" role="status"></p>
+
+          <p class="form-footnote">
+            Already registered?
+            <a href="sample01.html">Sign in</a>
+          </p>
+
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const registrationForm = document.getElementById("registrationForm");
+    const formMessage = document.getElementById("formMessage");
+    const level = document.getElementById("level");
+    const levelValue = document.getElementById("levelValue");
+
+    level.addEventListener("input", function () {
+      levelValue.textContent = level.value + "/10";
+    });
+
+    registrationForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const firstName = document.getElementById("firstName").value.trim();
+
+      formMessage.textContent =
+        "Thank you, " + firstName +
+        "! Your registration form has been completed successfully (demo).";
+
+      registrationForm.reset();
+      levelValue.textContent = "5/10";
+    });
+  </script>
+</body>
+</html>

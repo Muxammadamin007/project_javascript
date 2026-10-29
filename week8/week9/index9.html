@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Week 9 | Creative Coding Lab</title>
+
+  <style>
+    :root {
+      color-scheme: light dark;
+      --page: #f5f4ed;
+      --surface: #fffefa;
+      --surface-soft: #f8f7f0;
+      --ink: #242920;
+      --muted: #73796e;
+      --line: #e4e5d9;
+      --accent: #477a46;
+      --accent-dark: #315d34;
+      --accent-soft: #e8f0dd;
+      --orange: #e99456;
+      --blue: #e4eef0;
+      --shadow: 0 20px 55px rgb(46 57 34 / 8%);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --page: #191d18;
+        --surface: #252b23;
+        --surface-soft: #2e352a;
+        --ink: #eff1e8;
+        --muted: #b6bdad;
+        --line: #414a3b;
+        --accent: #a7cf91;
+        --accent-dark: #c4e3b0;
+        --accent-soft: #344331;
+        --orange: #ffb078;
+        --blue: #2d4042;
+        --shadow: 0 20px 55px rgb(0 0 0 / 24%);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 34px 20px 60px;
+      background:
+        radial-gradient(ellipse at 2% 2%, rgb(233 148 86 / 15%), transparent 31rem),
+        radial-gradient(ellipse at 96% 29%, rgb(71 122 70 / 12%), transparent 30rem),
+        var(--page);
+      color: var(--ink);
+      font: 16px/1.6 "Avenir Next", Avenir, "Segoe UI", sans-serif;
+    }
+
+    a {
+      color: var(--accent-dark);
+      text-underline-offset: 4px;
+    }
+
+    a:hover {
+      color: var(--orange);
+    }
+
+    a:focus-visible {
+      outline: 3px solid var(--orange);
+      outline-offset: 3px;
+    }
+
+    .home {
+      width: min(100%, 1020px);
+      margin: 0 auto;
+    }
+
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 30px;
+      font-size: .9rem;
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    .back::before {
+      content: "←";
+      font-size: 1.1em;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--accent-dark);
+      font-size: .72rem;
+      font-weight: 850;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .live-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin: 0 6px 1px 0;
+      border-radius: 50%;
+      background: var(--orange);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(250px, .8fr);
+      align-items: center;
+      gap: 36px;
+      margin-bottom: 38px;
+    }
+
+    .hero-copy {
+      padding: 12px 0;
+    }
+
+    h1,
+    h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 500;
+      line-height: 1.12;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-size: clamp(3rem, 8vw, 5.2rem);
+      letter-spacing: -.055em;
+    }
+
+    h1 span {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .lede {
+      max-width: 59ch;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .hero-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 24px;
+      padding: 12px 17px;
+      border-radius: 10px;
+      background: var(--accent);
+      color: #fff;
+      font-size: .88rem;
+      font-weight: 800;
+      text-decoration: none;
+      transition: transform .18s ease, background .18s ease;
+    }
+
+    .hero-link:hover {
+      transform: translateY(-2px);
+      background: var(--accent-dark);
+      color: #fff;
+    }
+
+    .hero-art {
+      position: relative;
+      display: grid;
+      min-height: 300px;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--accent-soft);
+    }
+
+    .art-orbit {
+      position: absolute;
+      width: 218px;
+      height: 218px;
+      border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+      border-radius: 50%;
+      transform: rotate(-28deg) scaleX(1.45);
+    }
+
+    .orbit-two {
+      width: 175px;
+      height: 175px;
+      transform: rotate(38deg) scaleX(1.65);
+      border-color: color-mix(in srgb, var(--orange) 65%, transparent);
+    }
+
+    .art-sticker {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      width: 136px;
+      height: 136px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      border: 1px solid rgb(255 255 255 / 48%);
+      border-radius: 34px;
+      background: var(--orange);
+      color: #30271f;
+      box-shadow: 0 15px 35px rgb(117 77 41 / 20%);
+      transform: rotate(-8deg);
+    }
+
+    .art-sticker span {
+      font-size: .7rem;
+      font-weight: 900;
+      letter-spacing: .18em;
+    }
+
+    .art-sticker strong {
+      font-family: Georgia, serif;
+      font-size: 3.2rem;
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    .art-label {
+      position: absolute;
+      right: 22px;
+      bottom: 20px;
+      color: var(--accent-dark);
+      font-family: Georgia, serif;
+      font-size: 1rem;
+      font-style: italic;
+      line-height: 1.2;
+      text-align: right;
+      transform: rotate(-5deg);
+    }
+
+    .art-star {
+      position: absolute;
+      color: var(--accent);
+      font-size: 1.7rem;
+    }
+
+    .star-one {
+      top: 36px;
+      left: 34px;
+    }
+
+    .star-two {
+      top: 58px;
+      right: 43px;
+      color: var(--orange);
+    }
+
+    .content-panel {
+      padding: clamp(20px, 4vw, 34px);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .section-heading .eyebrow {
+      margin-bottom: 5px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.45rem, 4vw, 2rem);
+      letter-spacing: -.025em;
+    }
+
+    .week-tag {
+      flex: 0 0 auto;
+      padding: 7px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: .76rem;
+      font-weight: 750;
+    }
+
+    .lesson-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .lesson {
+      padding: 17px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface-soft);
+    }
+
+    .lesson-icon {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 13px;
+      place-items: center;
+      border-radius: 11px;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      font-weight: 850;
+    }
+
+    .lesson-icon-orange {
+      background: color-mix(in srgb, var(--orange) 22%, var(--surface));
+      color: #9b542b;
+    }
+
+    .lesson-icon-blue {
+      background: var(--blue);
+      color: var(--accent-dark);
+    }
+
+    .lesson h3 {
+      margin: 0;
+      font-size: .95rem;
+    }
+
+    .lesson p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: .82rem;
+      line-height: 1.5;
+    }
+
+    .lab-row {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 14px;
+      padding: 15px 16px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--accent-soft);
+      color: var(--ink);
+      text-decoration: none;
+      transition: border-color .18s ease, transform .18s ease;
+    }
+
+    .lab-row:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+      color: var(--ink);
+    }
+
+    .lab-number {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border-radius: 11px;
+      background: var(--surface);
+      color: var(--accent-dark);
+      font-size: .76rem;
+      font-weight: 850;
+    }
+
+    .lab-copy strong,
+    .lab-copy small {
+      display: block;
+    }
+
+    .lab-copy strong {
+      font-size: .94rem;
+    }
+
+    .lab-copy small {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .lab-arrow {
+      color: var(--accent-dark);
+      font-size: 1.25rem;
+    }
+
+    .page-note {
+      margin: 17px 4px 0;
+      color: var(--muted);
+      font-size: .83rem;
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding: 24px 14px 42px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .hero-art {
+        min-height: 245px;
+      }
+
+      .lesson-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .lesson {
+        display: grid;
+        grid-template-columns: 38px 1fr;
+        column-gap: 12px;
+        align-items: center;
+      }
+
+      .lesson-icon {
+        grid-row: span 2;
+        margin: 0;
+      }
+
+      .lesson p {
+        margin-top: 2px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .lab-row {
+        grid-template-columns: 38px minmax(0, 1fr) auto;
+        gap: 10px;
+        padding: 12px;
+      }
+
+      .lab-copy small {
+        font-size: .72rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="home">
+    <a class="back" href="../index.html">Back to home</a>
+
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">
+          <span class="live-dot" aria-hidden="true"></span>
+          JSK0126002 · Web Programming · Week 9
+        </p>
+
+        <h1>Make it real.<br><span>Make it yours.</span></h1>
+
+        <p class="lede">
+          A better form is more than a submit button. Practice real-time
+          validation, thoughtful feedback, and a smoother sign-up from
+          the very first keystroke.
+        </p>
+
+        <a class="hero-link" href="samples/sample01.html">
+          Explore the registration demo
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+
+      <div class="hero-art" aria-hidden="true">
+        <div class="art-orbit orbit-one"></div>
+        <div class="art-orbit orbit-two"></div>
+
+        <div class="art-sticker">
+          <span>IDEA</span>
+          <strong>→</strong>
+        </div>
+
+        <div class="art-label">A little<br>more creative.</div>
+        <span class="art-star star-one">✳</span>
+        <span class="art-star star-two">✦</span>
+      </div>
+    </header>
+
+    <section class="content-panel" aria-labelledby="week-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">This week’s skill</p>
+          <h2 id="week-heading">Validation that feels helpful.</h2>
+        </div>
+
+        <span class="week-tag">01 interactive lab</span>
+      </div>
+
+      <div class="lesson-grid">
+        <article class="lesson">
+          <span class="lesson-icon" aria-hidden="true">✓</span>
+          <h3>Validate as you go</h3>
+          <p>
+            Catch missing or mismatched details early with clear,
+            field-level feedback.
+          </p>
+        </article>
+
+        <article class="lesson">
+          <span class="lesson-icon lesson-icon-orange" aria-hidden="true">↔</span>
+          <h3>Confirm with confidence</h3>
+          <p>
+            Check IDs, email addresses, password length, and matching passwords.
+          </p>
+        </article>
+
+        <article class="lesson">
+          <span class="lesson-icon lesson-icon-blue" aria-hidden="true">✦</span>
+          <h3>Finish on a high note</h3>
+          <p>
+            See a friendly confirmation and a safe summary of the registration.
+          </p>
+        </article>
+      </div>
+
+      <a class="lab-row" href="samples/sample01.html">
+        <span class="lab-number">01</span>
+
+        <span class="lab-copy">
+          <strong>Creative Coding Lab</strong>
+          <small>Interactive registration · Custom JavaScript validation</small>
+        </span>
+
+        <span class="lab-arrow" aria-hidden="true">↗</span>
+      </a>
+    </section>
+
+    <p class="page-note">
+      A browser-only demo: information is not sent to a server,
+      and passwords never appear in the confirmation.
+    </p>
+  </main>
+</body>
+</html>

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 8 | Forms Lab</title>
+
+  <style>
+    :root {
+      --bg: #f4f5f9;
+      --white: #ffffff;
+      --text: #20243a;
+      --muted: #777f93;
+      --border: #e5e7ef;
+      --primary: #6254d9;
+      --mint: #e5f5ef;
+      --peach: #fff0e7;
+      --blue: #e8f1ff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 32px 22px 50px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+
+    .wrapper {
+      width: min(100%, 1080px);
+      margin: 0 auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 60px;
+    }
+
+    .back-link {
+      display: inline-block;
+      padding: 9px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    .back-link:hover {
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .course-code {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 1.4px;
+    }
+
+    .hero {
+      max-width: 720px;
+      margin-bottom: 50px;
+    }
+
+    .hero-label {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .hero h1 {
+      margin: 22px 0 18px;
+      font-size: clamp(42px, 7vw, 72px);
+      line-height: 1.05;
+      letter-spacing: -3px;
+    }
+
+    .hero h1 span {
+      color: var(--primary);
+    }
+
+    .hero-text {
+      max-width: 570px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.9;
+    }
+
+    .workspace {
+      padding: 30px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--white);
+      box-shadow: 0 15px 45px rgba(37, 42, 75, 0.05);
+    }
+
+    .workspace-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 25px;
+    }
+
+    .section-label {
+      margin: 0 0 7px;
+      color: var(--primary);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+    }
+
+    .workspace-heading h2 {
+      margin: 0;
+      font-size: 26px;
+      letter-spacing: -0.7px;
+    }
+
+    .project-total {
+      padding: 8px 12px;
+      border-radius: 7px;
+      background: #efedff;
+      color: var(--primary);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .project {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: var(--white);
+      color: var(--text);
+      text-decoration: none;
+      transition: transform 0.22s, box-shadow 0.22s,
+        border-color 0.22s;
+    }
+
+    .project:hover {
+      transform: translateY(-5px);
+      border-color: #c7c0ff;
+      box-shadow: 0 14px 30px rgba(60, 53, 130, 0.09);
+    }
+
+    .project-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 17px;
+    }
+
+    .project-number {
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.3px;
+    }
+
+    .project-symbol {
+      display: grid;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--primary);
+      font-size: 17px;
+    }
+
+    .project-illustration {
+      display: grid;
+      min-height: 145px;
+      place-items: center;
+      margin-bottom: 22px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .login-art {
+      background: var(--mint);
+    }
+
+    .register-art {
+      background: var(--peach);
+    }
+
+    .contact-art {
+      background: var(--blue);
+    }
+
+    .mini-window {
+      display: flex;
+      width: 105px;
+      flex-direction: column;
+      gap: 9px;
+      padding: 15px;
+      border: 1px solid rgba(32, 36, 58, 0.06);
+      border-radius: 9px;
+      background: var(--white);
+      box-shadow: 0 8px 18px rgba(32, 36, 58, 0.07);
+      transform: rotate(-3deg);
+    }
+
+    .register-art .mini-window {
+      transform: rotate(3deg);
+    }
+
+    .mini-line {
+      height: 7px;
+      border-radius: 4px;
+      background: #e6e8f0;
+    }
+
+    .mini-line.short {
+      width: 65%;
+    }
+
+    .mini-button {
+      height: 10px;
+      margin-top: 3px;
+      border-radius: 4px;
+      background: var(--primary);
+    }
+
+    .envelope {
+      display: grid;
+      width: 76px;
+      height: 76px;
+      place-items: center;
+      border: 1px solid rgba(49, 87, 213, 0.1);
+      border-radius: 22px;
+      background: var(--white);
+      color: var(--primary);
+      font-size: 37px;
+      box-shadow: 0 8px 20px rgba(49, 87, 213, 0.08);
+      transform: rotate(-6deg);
+    }
+
+    .project-body h3 {
+      margin: 0 0 9px;
+      font-size: 18px;
+      line-height: 1.4;
+    }
+
+    .project-body p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .project-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: auto;
+      padding-top: 22px;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .bottom-note {
+      margin-top: 32px;
+      padding: 22px 5px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .bottom-note span {
+      color: var(--primary);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+    }
+
+    .bottom-note p {
+      margin: 8px 0;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .bottom-note small {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    a:focus-visible {
+      outline: 3px solid #a69cff;
+      outline-offset: 4px;
+    }
+
+    @media (max-width: 800px) {
+      .projects {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .project:last-child {
+        grid-column: 1 / -1;
+      }
+
+      .project:last-child .project-illustration {
+        min-height: 120px;
+      }
+
+      .workspace {
+        padding: 22px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 22px 13px 35px;
+      }
+
+      .topbar {
+        margin-bottom: 45px;
+      }
+
+      .course-code {
+        font-size: 9px;
+      }
+
+      .hero h1 {
+        letter-spacing: -1.5px;
+      }
+
+      .workspace {
+        padding: 17px;
+      }
+
+      .workspace-heading {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .projects {
+        grid-template-columns: 1fr;
+      }
+
+      .project:last-child {
+        grid-column: auto;
+      }
+
+      .project-illustration,
+      .project:last-child .project-illustration {
+        min-height: 140px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+  <main class="wrapper">
+
+    <nav class="topbar">
+      <a href="../index.html" class="back-link">← Back to home</a>
+      <span class="course-code">WEB PROGRAMMING / WEEK 08</span>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-label">
+        <span class="status-dot"></span>
+        INTERACTIVE DESIGN LAB
+      </div>
+
+      <h1>Forms that<br><span>work better.</span></h1>
+
+      <p class="hero-text">
+        Explore practical form designs built for clear input,
+        simple validation, and a smoother user experience.
+      </p>
+    </header>
+
+    <section class="workspace">
+      <div class="workspace-heading">
+        <div>
+          <p class="section-label">YOUR COLLECTION</p>
+          <h2>Choose your project</h2>
+        </div>
+        <span class="project-total">03 PROJECTS</span>
+      </div>
+
+      <div class="projects">
+
+        <a href="signin_page.html" class="project">
+          <div class="project-header">
+            <span class="project-number">PROJECT 01</span>
+            <span class="project-symbol">↗</span>
+          </div>
+
+          <div class="project-illustration login-art">
+            <span class="mini-window">
+              <span class="mini-line"></span>
+              <span class="mini-line short"></span>
+              <span class="mini-button"></span>
+            </span>
+          </div>
+
+          <div class="project-body">
+            <h3>Sign in</h3>
+            <p>
+              A clean login interface with organized fields
+              and a remember-me option.
+            </p>
+          </div>
+
+          <div class="project-footer">
+            <span>Explore login form</span>
+            <span>→</span>
+          </div>
+        </a>
+
+        <a href="st_reg.html" class="project">
+          <div class="project-header">
+            <span class="project-number">PROJECT 02</span>
+            <span class="project-symbol">↗</span>
+          </div>
+
+          <div class="project-illustration register-art">
+            <span class="mini-window">
+              <span class="mini-line"></span>
+              <span class="mini-line"></span>
+              <span class="mini-line short"></span>
+              <span class="mini-button"></span>
+            </span>
+          </div>
+
+          <div class="project-body">
+            <h3>Student Registration</h3>
+            <p>
+              An enrollment form for student details
+              with grouped inputs and feedback.
+            </p>
+          </div>
+
+          <div class="project-footer">
+            <span>Explore registration</span>
+            <span>→</span>
+          </div>
+        </a>
+
+        <a href="contact_us.html" class="project">
+          <div class="project-header">
+            <span class="project-number">PROJECT 03</span>
+            <span class="project-symbol">↗</span>
+          </div>
+
+          <div class="project-illustration contact-art">
+            <span class="envelope">✉</span>
+          </div>
+
+          <div class="project-body">
+            <h3>Contact Us</h3>
+            <p>
+              A message form with required fields,
+              HTML validation, and feedback.
+            </p>
+          </div>
+
+          <div class="project-footer">
+            <span>Explore contact form</span>
+            <span>→</span>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <footer class="bottom-note">
+      <span>WEEK 08 · FORM DESIGN</span>
+      <p>Good forms make things simple.</p>
+      <small>
+        Interactive demonstrations only. Information is not sent to a server by this page.
+      </small>
+    </footer>
+
+  </main>
+</body>
+</>
