@@ -4,719 +4,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Creative Coding Lab Week 9 learning dashboard.">
+  <meta name="color-scheme" content="light dark">
   <title>Creative Coding Lab | Week 9</title>
-
-  <style>
-    :root {
-      --page: #f5f6fa;
-      --surface: #ffffff;
-      --text: #202136;
-      --muted: #85879b;
-      --purple: #7057e8;
-      --purple-light: #eeeaff;
-      --border: #e9eaf1;
-      --radius: 18px;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Inter, "Segoe UI", Arial, sans-serif;
-      background: var(--page);
-      color: var(--text);
-      min-height: 100vh;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button {
-      font: inherit;
-    }
-
-    .app {
-      display: flex;
-      min-height: 100vh;
-    }
-
-    /* Sidebar */
-
-    .sidebar {
-      width: 245px;
-      background: #202136;
-      color: #fff;
-      padding: 30px 20px;
-      display: flex;
-      flex-direction: column;
-      flex-shrink: 0;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 50px;
-      font-size: 17px;
-      font-weight: 750;
-    }
-
-    .brand-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--purple);
-      border-radius: 13px;
-      display: grid;
-      place-items: center;
-      font-size: 21px;
-    }
-
-    .nav-label {
-      color: #85869f;
-      font-size: 10px;
-      letter-spacing: 2px;
-      font-weight: 700;
-      margin: 0 0 15px 12px;
-    }
-
-    .nav-links {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .nav-links a {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      padding: 13px 14px;
-      border-radius: 12px;
-      color: #b7b8cb;
-      font-size: 13px;
-      transition: 0.2s;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      background: #34334e;
-      color: #fff;
-    }
-
-    .nav-links a.active {
-      box-shadow: inset 3px 0 var(--purple);
-    }
-
-    .nav-icon {
-      width: 20px;
-      text-align: center;
-      font-size: 17px;
-    }
-
-    .sidebar-bottom {
-      margin-top: auto;
-      padding-top: 35px;
-    }
-
-    .help-card {
-      background: #2c2b45;
-      border-radius: 16px;
-      padding: 17px;
-    }
-
-    .help-card strong {
-      font-size: 13px;
-    }
-
-    .help-card p {
-      color: #b3b4c8;
-      font-size: 11px;
-      line-height: 1.7;
-      margin: 9px 0 15px;
-    }
-
-    .help-card a {
-      display: block;
-      background: var(--purple);
-      padding: 10px;
-      border-radius: 9px;
-      text-align: center;
-      font-size: 12px;
-      font-weight: 650;
-    }
-
-    /* Main content */
-
-    .main {
-      flex: 1;
-      min-width: 0;
-      padding: 30px 38px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      margin-bottom: 35px;
-    }
-
-    .breadcrumb {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 7px;
-    }
-
-    .breadcrumb span {
-      color: var(--purple);
-      font-weight: 700;
-    }
-
-    .topbar h1 {
-      font-size: 25px;
-      letter-spacing: -0.7px;
-    }
-
-    .top-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .theme-button,
-    .avatar {
-      border: 1px solid var(--border);
-      background: var(--surface);
-      height: 43px;
-      width: 43px;
-      border-radius: 13px;
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-    }
-
-    .avatar {
-      background: var(--purple-light);
-      color: var(--purple);
-      font-weight: 800;
-      border: 0;
-    }
-
-    /* Welcome section */
-
-    .welcome {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 25px;
-      padding: 30px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 22px;
-      margin-bottom: 25px;
-      overflow: hidden;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--purple-light);
-      color: var(--purple);
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 11px;
-      font-weight: 750;
-      margin-bottom: 18px;
-    }
-
-    .welcome h2 {
-      max-width: 460px;
-      font-size: clamp(27px, 3vw, 39px);
-      line-height: 1.2;
-      letter-spacing: -1.4px;
-    }
-
-    .welcome h2 span {
-      color: var(--purple);
-    }
-
-    .welcome p {
-      max-width: 440px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.8;
-      margin: 15px 0 22px;
-    }
-
-    .primary-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: var(--purple);
-      color: #fff;
-      padding: 13px 18px;
-      border-radius: 11px;
-      font-size: 12px;
-      font-weight: 700;
-      transition: 0.2s;
-    }
-
-    .primary-button:hover {
-      transform: translateY(-2px);
-      background: #5c43d0;
-    }
-
-    .welcome-art {
-      width: 220px;
-      height: 220px;
-      flex-shrink: 0;
-      background: #f0edff;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      position: relative;
-    }
-
-    .art-window {
-      width: 145px;
-      background: #fff;
-      border-radius: 15px;
-      padding: 15px;
-      box-shadow: 0 18px 45px #5a48a326;
-      transform: rotate(-7deg);
-    }
-
-    .window-dots {
-      display: flex;
-      gap: 5px;
-      margin-bottom: 18px;
-    }
-
-    .window-dots i {
-      width: 7px;
-      height: 7px;
-      background: #ff8b9b;
-      border-radius: 50%;
-    }
-
-    .window-dots i:nth-child(2) {
-      background: #ffcc71;
-    }
-
-    .window-dots i:nth-child(3) {
-      background: #66d6ad;
-    }
-
-    .code-line {
-      height: 7px;
-      border-radius: 5px;
-      margin: 9px 0;
-      background: #e4e1fa;
-    }
-
-    .code-line.short {
-      width: 55%;
-      background: #b5a8ff;
-    }
-
-    .code-line.medium {
-      width: 76%;
-    }
-
-    .floating-symbol {
-      position: absolute;
-      background: #fff;
-      color: var(--purple);
-      border-radius: 13px;
-      padding: 12px 15px;
-      font-size: 22px;
-      font-weight: 800;
-      box-shadow: 0 8px 25px #453a8018;
-    }
-
-    .symbol-one {
-      top: 15px;
-      right: 4px;
-    }
-
-    .symbol-two {
-      left: 1px;
-      bottom: 20px;
-      color: #f49c55;
-    }
-
-    /* Stats */
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-      margin-bottom: 36px;
-    }
-
-    .stat-card {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      background: var(--surface);
-      padding: 21px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-    }
-
-    .stat-icon {
-      width: 46px;
-      height: 46px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      font-size: 21px;
-      flex-shrink: 0;
-    }
-
-    .stat-icon.purple {
-      background: #eeeaff;
-    }
-
-    .stat-icon.orange {
-      background: #fff1e5;
-    }
-
-    .stat-icon.green {
-      background: #e4f8ef;
-    }
-
-    .stat-card small {
-      display: block;
-      color: var(--muted);
-      font-size: 11px;
-      margin-bottom: 6px;
-    }
-
-    .stat-card strong {
-      font-size: 23px;
-    }
-
-    .stat-card strong span {
-      font-size: 11px;
-      color: var(--muted);
-      font-weight: 500;
-    }
-
-    /* Lessons */
-
-    .section-heading {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 18px;
-    }
-
-    .section-heading h2 {
-      font-size: 19px;
-      letter-spacing: -0.5px;
-    }
-
-    .section-heading p {
-      color: var(--muted);
-      font-size: 11px;
-      margin-top: 6px;
-    }
-
-    .section-heading a {
-      color: var(--purple);
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .lesson-list {
-      display: flex;
-      flex-direction: column;
-      gap: 13px;
-    }
-
-    .lesson {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      padding: 19px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      transition: transform 0.2s, border-color 0.2s;
-    }
-
-    .lesson:hover {
-      transform: translateX(4px);
-      border-color: #c9bfff;
-    }
-
-    .lesson-number {
-      width: 48px;
-      height: 48px;
-      display: grid;
-      place-items: center;
-      flex-shrink: 0;
-      border-radius: 14px;
-      background: var(--purple-light);
-      color: var(--purple);
-      font-weight: 800;
-      font-size: 15px;
-    }
-
-    .lesson:nth-child(2) .lesson-number {
-      background: #fff0e5;
-      color: #df8642;
-    }
-
-    .lesson:nth-child(3) .lesson-number {
-      background: #e5f8ee;
-      color: #319b69;
-    }
-
-    .lesson-info {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .lesson-info h3 {
-      font-size: 14px;
-      margin-bottom: 6px;
-    }
-
-    .lesson-info p {
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.6;
-    }
-
-    .lesson-tag {
-      display: inline-block;
-      margin-top: 9px;
-      color: var(--muted);
-      font-size: 10px;
-      background: var(--page);
-      padding: 5px 8px;
-      border-radius: 6px;
-    }
-
-    .lesson-action {
-      display: grid;
-      place-items: center;
-      width: 38px;
-      height: 38px;
-      border-radius: 11px;
-      background: var(--page);
-      color: var(--text);
-      font-size: 19px;
-      flex-shrink: 0;
-      transition: 0.2s;
-    }
-
-    .lesson:hover .lesson-action {
-      background: var(--purple);
-      color: white;
-    }
-
-    .footer {
-      text-align: center;
-      padding: 30px 0 10px;
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    /* Dark mode */
-
-    body.dark {
-      --page: #151522;
-      --surface: #202031;
-      --text: #f0effb;
-      --muted: #a3a3bb;
-      --border: #343449;
-      --purple-light: #332b55;
-    }
-
-    body.dark .welcome-art {
-      background: #302847;
-    }
-
-    body.dark .art-window,
-    body.dark .floating-symbol {
-      background: #252438;
-    }
-
-    body.dark .code-line {
-      background: #51466e;
-    }
-
-    body.dark .code-line.short {
-      background: #a99af6;
-    }
-
-    body.dark .lesson-tag,
-    body.dark .lesson-action {
-      background: #2b2b40;
-    }
-
-    /* Responsive */
-
-    @media (max-width: 1050px) {
-      .sidebar {
-        width: 205px;
-        padding: 25px 14px;
-      }
-
-      .main {
-        padding: 25px;
-      }
-
-      .welcome-art {
-        width: 175px;
-        height: 175px;
-      }
-
-      .stats {
-        gap: 10px;
-      }
-
-      .stat-card {
-        padding: 15px;
-      }
-    }
-
-    @media (max-width: 760px) {
-      .sidebar {
-        width: 75px;
-        padding: 24px 10px;
-      }
-
-      .brand {
-        justify-content: center;
-        margin-bottom: 38px;
-      }
-
-      .brand-name,
-      .nav-label,
-      .nav-links .nav-text,
-      .sidebar-bottom {
-        display: none;
-      }
-
-      .nav-links a {
-        justify-content: center;
-        padding: 14px 5px;
-      }
-
-      .nav-icon {
-        font-size: 20px;
-      }
-
-      .main {
-        padding: 22px 17px;
-      }
-
-      .welcome {
-        padding: 23px;
-      }
-
-      .welcome-art {
-        width: 130px;
-        height: 130px;
-      }
-
-      .art-window {
-        width: 100px;
-        padding: 10px;
-      }
-
-      .floating-symbol {
-        font-size: 15px;
-        padding: 8px 10px;
-      }
-
-      .stats {
-        grid-template-columns: 1fr;
-      }
-
-      .stat-card {
-        padding: 16px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .topbar h1 {
-        font-size: 20px;
-      }
-
-      .welcome-art {
-        display: none;
-      }
-
-      .welcome h2 {
-        font-size: 30px;
-      }
-
-      .lesson {
-        gap: 12px;
-        padding: 13px;
-      }
-
-      .lesson-number {
-        width: 40px;
-        height: 40px;
-      }
-
-      .lesson-info h3 {
-        font-size: 12px;
-      }
-
-      .lesson-info p {
-        font-size: 10px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="style9.css">
+  <script src="script9.js" defer></script>
 </head>
 
 <body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
   <div class="app">
-
     <aside class="sidebar">
       <a href="../index.html" class="brand">
-        <span class="brand-icon">✦</span>
+        <span class="brand-icon" aria-hidden="true">✦</span>
         <span class="brand-name">Creative Lab</span>
       </a>
-
       <p class="nav-label">WORKSPACE</p>
-
-      <nav class="nav-links">
-        <a href="../index.html">
-          <span class="nav-icon">⌂</span>
-          <span class="nav-text">Home</span>
-        </a>
-
-        <a href="#" class="active">
-          <span class="nav-icon">▤</span>
-          <span class="nav-text">My Lessons</span>
-        </a>
-
-        <a href="../index.html">
-          <span class="nav-icon">◈</span>
-          <span class="nav-text">Activities</span>
-        </a>
-
-        <a href="learning.html">
-          <span class="nav-icon">↗</span>
-          <span class="nav-text">Sample Project</span>
-        </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="../index.html"><span class="nav-icon" aria-hidden="true">⌂</span><span class="nav-text">Home</span></a>
+        <a href="#lessons" class="active" aria-current="page"><span class="nav-icon" aria-hidden="true">▤</span><span
+            class="nav-text">My Lessons</span></a>
+        <a href="../index.html"><span class="nav-icon" aria-hidden="true">◈</span><span
+            class="nav-text">Activities</span></a>
+        <a href="learning.html"><span class="nav-icon" aria-hidden="true">↗</span><span class="nav-text">Sample
+            Project</span></a>
       </nav>
-
       <div class="sidebar-bottom">
         <div class="help-card">
           <strong>Keep creating!</strong>
@@ -726,42 +38,33 @@
       </div>
     </aside>
 
-    <main class="main">
-
+    <main class="main" id="main-content" tabindex="-1">
       <header class="topbar">
         <div>
-          <div class="breadcrumb">Workspace / <span>Week 09</span></div>
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="../index.html">Workspace</a><span aria-hidden="true"> / </span><span aria-current="page">Week
+              09</span>
+          </nav>
           <h1>Learning Dashboard</h1>
         </div>
-
         <div class="top-actions">
-          <button class="theme-button" id="themeToggle" aria-label="Toggle dark mode">☾</button>
-          <div class="avatar">C</div>
+          <button class="theme-button" id="themeToggle" type="button" aria-label="Enable dark mode"
+            aria-pressed="false">☾</button>
+          <div class="avatar" aria-label="User profile">C</div>
         </div>
       </header>
 
-      <section class="welcome">
+      <section class="welcome" aria-labelledby="welcome-title">
         <div>
           <div class="eyebrow">✦ JSK0126002 · WEEK 09</div>
-
-          <h2>Make ideas into <span>real projects.</span></h2>
-
-          <p>
-            Welcome to your creative coding workspace.
-            Explore the lessons, experiment with new ideas,
-            and keep improving your web development skills.
-          </p>
-
-          <a href="../index.html" class="primary-button">
-            Start learning <span>→</span>
-          </a>
+          <h2 id="welcome-title">Make ideas into <span>real projects.</span></h2>
+          <p>Welcome to your creative coding workspace. Explore the lessons, experiment with new ideas, and keep
+            improving your web development skills.</p>
+          <a href="../index.html" class="primary-button">Start learning <span aria-hidden="true">→</span></a>
         </div>
-
         <div class="welcome-art" aria-hidden="true">
           <div class="art-window">
-            <div class="window-dots">
-              <i></i><i></i><i></i>
-            </div>
+            <div class="window-dots"><i></i><i></i><i></i></div>
             <div class="code-line short"></div>
             <div class="code-line"></div>
             <div class="code-line medium"></div>
@@ -772,100 +75,68 @@
         </div>
       </section>
 
-      <section class="stats">
+      <section class="stats" aria-label="Course statistics">
         <div class="stat-card">
-          <div class="stat-icon purple">▤</div>
-          <div>
-            <small>Available lessons</small>
-            <strong>03 <span>lessons</span></strong>
-          </div>
+          <div class="stat-icon purple" aria-hidden="true">▤</div>
+          <div><small>Available lessons</small><strong>03 <span>lessons</span></strong></div>
         </div>
-
         <div class="stat-card">
-          <div class="stat-icon orange">⌘</div>
-          <div>
-            <small>Course week</small>
-            <strong>09 <span>/ 16</span></strong>
-          </div>
+          <div class="stat-icon orange" aria-hidden="true">⌘</div>
+          <div><small>Course week</small><strong>09 <span>/ 16</span></strong></div>
         </div>
-
         <div class="stat-card">
-          <div class="stat-icon green">✧</div>
-          <div>
-            <small>Learning status</small>
-            <strong>Active</strong>
-          </div>
+          <div class="stat-icon green" aria-hidden="true">✧</div>
+          <div><small>Learning status</small><strong>Active</strong></div>
         </div>
       </section>
 
-      <section id="lessons">
+      <section id="lessons" aria-labelledby="lessons-title">
         <div class="section-heading">
           <div>
-            <h2>Your learning path</h2>
+            <h2 id="lessons-title">Your learning path</h2>
             <p>Choose a lesson and continue practicing.</p>
           </div>
           <a href="learning.html">Open sample ↗</a>
         </div>
-
         <div class="lesson-list">
-
           <article class="lesson">
-            <div class="lesson-number">01</div>
-
+            <div class="lesson-number" aria-hidden="true">01</div>
             <div class="lesson-info">
-              <h3>HTML & Structure</h3>
-              <p>Understand page structure and organize content with HTML.</p>
-              <span class="lesson-tag">FOUNDATION</span>
+              <h3>HTML &amp; Structure</h3>
+              <p>Understand page structure and organize content with HTML.</p><span class="lesson-tag">FOUNDATION</span>
             </div>
-
             <a href="learning.html" class="lesson-action" aria-label="Open HTML lesson">→</a>
           </article>
-
           <article class="lesson">
-            <div class="lesson-number">02</div>
-
+            <div class="lesson-number" aria-hidden="true">02</div>
             <div class="lesson-info">
-              <h3>CSS & Visual Design</h3>
-              <p>Explore layouts, colors, spacing, and responsive styling.</p>
-              <span class="lesson-tag">DESIGN</span>
+              <h3>CSS &amp; Visual Design</h3>
+              <p>Explore layouts, colors, spacing, and responsive styling.</p><span class="lesson-tag">DESIGN</span>
             </div>
-
             <a href="learning.html" class="lesson-action" aria-label="Open CSS lesson">→</a>
           </article>
-
           <article class="lesson">
-            <div class="lesson-number">03</div>
-
+            <div class="lesson-number" aria-hidden="true">03</div>
             <div class="lesson-info">
               <h3>Creative Practice</h3>
-              <p>Apply your skills in a practical web development exercise.</p>
-              <span class="lesson-tag">PRACTICE</span>
+              <p>Apply your skills in a practical web development exercise.</p><span class="lesson-tag">PRACTICE</span>
             </div>
-
             <a href="learning.html" class="lesson-action" aria-label="Open practice lesson">→</a>
           </article>
-
+          <article class="lesson">
+            <div class="lesson-number" aria-hidden="true">04</div>
+            <div class="lesson-info">
+              <h3>Accessibility Audit Report</h3>
+              <p>Review Lighthouse results and accessibility improvements.</p>
+              <span class="lesson-tag">ACCESSIBILITY</span>
+            </div>
+            <a href="./accessibility.html" class="lesson-action" aria-label="Open accessibility audit report">→</a>
+          </article>
         </div>
       </section>
-
-      <footer class="footer">
-        Creative Coding Lab · JSK0126002 · Week 09
-      </footer>
-
+      <footer class="footer">Creative Coding Lab · JSK0126002 · Week 09</footer>
     </main>
   </div>
-
-  <script>
-    const themeButton = document.getElementById("themeToggle");
-
-    themeButton.addEventListener("click", function () {
-      document.body.classList.toggle("dark");
-
-      const darkMode = document.body.classList.contains("dark");
-
-      themeButton.textContent = darkMode ? "☀" : "☾";
-    });
-  </script>
 </body>
 
 </html>

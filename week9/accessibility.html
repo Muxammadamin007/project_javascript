@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 9 | Accessibility Audit</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7f8;
+      color: #263238;
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    header h1 {
+      color: #087f8c;
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      color: #607078;
+    }
+
+    section {
+      background: white;
+      padding: 28px;
+      margin-bottom: 25px;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+    }
+
+    h2 {
+      color: #087f8c;
+      margin-bottom: 15px;
+      font-size: 23px;
+    }
+
+    h3 {
+      margin: 15px 0 8px;
+    }
+
+    .score {
+      font-size: 28px;
+      font-weight: bold;
+      color: #087f8c;
+      margin-bottom: 15px;
+    }
+
+    .screenshot {
+      width: 100%;
+      min-height: 220px;
+      object-fit: contain;
+      border: 2px dashed #9aabb0;
+      border-radius: 8px;
+      background: #f8fbfc;
+      display: block;
+      margin-top: 15px;
+    }
+
+    .placeholder {
+      color: #607078;
+      text-align: center;
+      padding: 12px;
+      font-size: 14px;
+    }
+
+    pre {
+      background: #eef3f5;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 10px 0;
+    }
+
+    code {
+      font-family: Consolas, monospace;
+    }
+
+    ul {
+      padding-left: 22px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    .result {
+      text-align: center;
+      background: #e8f7f5;
+    }
+
+    .result strong {
+      color: #087f8c;
+      font-size: 30px;
+    }
+
+    footer {
+      text-align: center;
+      color: #718087;
+      margin-top: 30px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 20px 12px;
+      }
+
+      section {
+        padding: 20px;
+      }
+
+      header h1 {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <header>
+      <h1>Accessibility Audit Report</h1>
+      <p>Web Programming — Week 9</p>
+      <p>Before and After Accessibility Improvements</p>
+    </header>
+
+    <section>
+      <h2>1. Initial Accessibility Audit</h2>
+      <p class="score">Score: 91 / 100</p>
+      <p>
+        This was my initial Lighthouse accessibility result.
+        The audit helped me identify accessibility problems
+        that needed improvement.
+      </p>
+
+      <img
+        src="../lighthouse_before.png"
+        alt="Lighthouse accessibility report showing a score of 91"
+        class="screenshot"
+      >
+      <p class="placeholder">
+        Screenshot 1 — Place your Lighthouse 91 score image here.
+      </p>
+    </section>
+
+    <section>
+      <h2>2. Improvements and Second Audit</h2>
+      <p class="score">Score: 95 / 100</p>
+      <p>
+        After reviewing the first audit, I made improvements
+        to the website's accessibility and tested it again.
+        The score increased from 91 to 95.
+      </p>
+
+      <h3>Changes I worked on:</h3>
+      <ul>
+        <li>Improved text and background color contrast.</li>
+        <li>Improved keyboard navigation and focus visibility.</li>
+        <li>Added accessibility improvements to page structure and form elements.</li>
+      </ul>
+
+      <img
+        src="../lighthouse2.png"
+        alt="Lighthouse accessibility report showing a score of 95"
+        class="screenshot"
+      >
+      <p class="placeholder">
+        Screenshot 2 — Place your Lighthouse 95 score image here.
+      </p>
+    </section>
+
+    <section>
+      <h2>3. Final Accessibility Audit</h2>
+      <p class="score">Score: 100 / 100</p>
+      <p>
+        After making further improvements, I ran Lighthouse
+        one more time. The final accessibility score reached 100.
+      </p>
+
+      <img
+        src="../lighthouse3.png"
+        alt="Lighthouse accessibility report showing a score of 100"
+        class="screenshot"
+      >
+      <p class="placeholder">
+        Screenshot 3 — Place your Lighthouse 100 score image here.
+      </p>
+    </section>
+
+    <section class="result">
+      <h2>Final Result</h2>
+      <p>My accessibility score improved from</p>
+      <strong>91 → 95 → 100</strong>
+      <p>
+        This process helped me understand the importance
+        of accessibility, readable content, keyboard navigation,
+        and inclusive web design.
+      </p>
+    </section>
+
+    <footer>
+      Web Programming | Week 9 Accessibility Assignment
+    </footer>
+
+  </div>
+</body>
+</html>

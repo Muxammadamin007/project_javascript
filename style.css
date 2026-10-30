@@ -5,7 +5,7 @@
   --surface: #11141b;
   --surface-hover: #171b25;
   --text: #f1f2f7;
-  --muted: #9297a7;
+  --muted: #a6a9ba;
   --border: #252936;
   --accent: #a99bff;
   --radius: 18px;
@@ -101,11 +101,9 @@ img {
   border: 1px solid var(--border);
   border-radius: 24px;
   background:
-    radial-gradient(
-      circle at 10% 100%,
+    radial-gradient(circle at 10% 100%,
       #7164a012,
-      transparent 42%
-    ),
+      transparent 42%),
     var(--surface);
 }
 
@@ -216,7 +214,7 @@ img {
   position: absolute;
   right: 25px;
   top: 25px;
-  color: #686d7d;
+  color: #a6a9ba;
   font-size: 9px;
   letter-spacing: 1.5px;
 }
@@ -323,7 +321,7 @@ img {
 }
 
 .week-arrow {
-  color: #777b8e;
+  color: #a6a9ba;
   font-size: 17px;
   transition: color 0.2s, transform 0.2s;
 }
@@ -339,7 +337,7 @@ img {
   gap: 20px;
   padding: 23px 0 30px;
   border-top: 1px solid var(--border);
-  color: #74798b;
+  color: #a6a9ba;
   font-size: 9px;
   letter-spacing: 1.2px;
   line-height: 1.8;
@@ -446,6 +444,7 @@ img {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
