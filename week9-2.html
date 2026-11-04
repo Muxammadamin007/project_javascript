@@ -1,0 +1,390 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Week 9 | Accessibility Audit</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #ffffff;
+      color: #171717;
+      line-height: 1.7;
+      padding: 50px 20px;
+    }
+
+    .container {
+      max-width: 950px;
+      margin: auto;
+    }
+
+    /* HEADER */
+
+    header {
+      padding-bottom: 40px;
+      border-bottom: 1px solid #eaeaea;
+      margin-bottom: 40px;
+    }
+
+    .top-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #2563eb;
+      margin-bottom: 15px;
+    }
+
+    header h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      letter-spacing: -2px;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    header h1 span {
+      color: #2563eb;
+    }
+
+    header p {
+      color: #737373;
+      font-size: 15px;
+    }
+
+    /* PROGRESS */
+
+    .progress {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 45px;
+    }
+
+    .progress-card {
+      padding: 22px;
+      border: 1px solid #eaeaea;
+      border-radius: 12px;
+      background: #fafafa;
+    }
+
+    .progress-card small {
+      color: #737373;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .progress-card h2 {
+      font-size: 32px;
+      margin-top: 8px;
+      letter-spacing: -1px;
+    }
+
+    .progress-card.final {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+    }
+
+    .progress-card.final h2 {
+      color: #2563eb;
+    }
+
+    /* SECTIONS */
+
+    .section {
+      margin-bottom: 28px;
+      padding: 30px;
+      border: 1px solid #eaeaea;
+      border-radius: 14px;
+      background: #ffffff;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 18px;
+    }
+
+    .section-heading h2 {
+      font-size: 21px;
+      letter-spacing: -0.5px;
+    }
+
+    .badge {
+      font-size: 12px;
+      font-weight: 700;
+      color: #2563eb;
+      background: #eff6ff;
+      padding: 6px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .score {
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -2px;
+      margin: 15px 0;
+    }
+
+    .score span {
+      color: #a3a3a3;
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+
+    .section p {
+      color: #666666;
+      font-size: 14px;
+    }
+
+    /* SCREENSHOTS */
+
+    .screenshot-container {
+      margin-top: 22px;
+      padding: 12px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+    }
+
+    .screenshot {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 7px;
+    }
+
+    .placeholder {
+      text-align: center;
+      padding: 10px;
+      color: #737373;
+      font-size: 12px;
+    }
+
+    /* IMPROVEMENTS */
+
+    h3 {
+      font-size: 15px;
+      margin: 25px 0 12px;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    li {
+      padding: 9px 0;
+      padding-left: 25px;
+      position: relative;
+      font-size: 14px;
+      color: #525252;
+    }
+
+    li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #2563eb;
+      font-weight: 700;
+    }
+
+    /* FINAL RESULT */
+
+    .result {
+      background: #111827;
+      color: white;
+      padding: 40px 30px;
+      border-radius: 16px;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .result h2 {
+      font-size: 25px;
+      margin-bottom: 12px;
+    }
+
+    .result p {
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
+    .result strong {
+      display: block;
+      font-size: clamp(30px, 6vw, 48px);
+      letter-spacing: -2px;
+      color: #60a5fa;
+      margin: 15px 0;
+    }
+
+    /* FOOTER */
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #eaeaea;
+      color: #999999;
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 600px) {
+      body {
+        padding: 30px 15px;
+      }
+
+      .progress {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 22px 18px;
+      }
+
+      .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      footer {
+        flex-direction: column;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+
+    <header>
+      <p class="top-label">WEB PROGRAMMING / WEEK 09-2</p>
+
+      <h1>Accessibility <span>Audit.</span></h1>
+
+      <p>Before and after accessibility improvements</p>
+    </header>
+
+    <div class="progress">
+
+      <div class="progress-card">
+        <small>INITIAL SCORE</small>
+        <h2>89</h2>
+      </div>
+
+      
+
+      <div class="progress-card final">
+        <small>FINAL SCORE</small>
+        <h2>100</h2>
+      </div>
+
+    </div>
+
+    <!-- FIRST AUDIT -->
+
+    <section class="section">
+
+      <div class="section-heading">
+        <h2>01. Initial Accessibility Audit</h2>
+        <span class="badge">Initial Test</span>
+      </div>
+
+      <div class="score">89 <span>/ 100</span></div>
+
+      <p>
+        This was my initial Lighthouse accessibility result.
+        The audit helped me identify accessibility problems
+        that needed improvement.
+      </p>
+
+      <div class="screenshot-container">
+        <img
+          src="./light1.png"
+          alt="Lighthouse accessibility report showing a score of 89"
+          class="screenshot"
+        >
+        <div class="placeholder">
+          Screenshot 01 — Initial Lighthouse Result
+        </div>
+      </div>
+
+    </section>
+
+
+    <section class="section">
+
+      <div class="section-heading">
+        <h2>02. Final Accessibility Audit</h2>
+        <span class="badge">Completed</span>
+      </div>
+
+      <div class="score">100 <span>/ 100</span></div>
+
+      <p>
+        After making further improvements, I ran Lighthouse
+        one more time. The final accessibility score reached 100.
+      </p>
+
+      <div class="screenshot-container">
+        <img
+          src="./light2.jpg"
+          alt="Lighthouse accessibility report showing a score of 100"
+          class="screenshot"
+        >
+        <div class="placeholder">
+          Screenshot 03 — Final Lighthouse Result
+        </div>
+      </div>
+
+    </section>
+
+    <!-- RESULT -->
+
+    <section class="result">
+
+      <h2>Final Result</h2>
+
+      <p>My accessibility score improved from</p>
+
+      <strong>89 → 100</strong>
+
+      <p>
+        This process helped me understand the importance
+        of accessibility, readable content, keyboard navigation,
+        and inclusive web design.
+      </p>
+
+    </section>
+
+    <footer>
+      <span>WEB PROGRAMMING · WEEK 09-2</span>
+      <span>© 2026 · MUKHAMMADAMIN</span>
+    </footer>
+
+  </main>
+
+</body>
+</html>
