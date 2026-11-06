@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Week 9-2: Lighthouse performance report for my portfolio, with the problems found, before and after screenshots, and the fixes.">
+  <meta name="theme-color" content="#0d0f14">
+  <title>Performance Optimization Report | Week 9-2</title>
+
+  <style>
+    :root {
+      --bg: #0d0f14;
+      --panel: #151922;
+      --line: #262c3a;
+      --text: #e8eaf0;
+      --muted: #9aa3b5;
+      --accent: #7aa2ff;
+      --good: #6fd0a0;
+      --bad: #f09a9a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    a { color: var(--accent); }
+    a:hover { color: #a9c1ff; }
+    a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0.5rem;
+      z-index: 9999;
+      background: #1a2744;
+      color: #fff;
+      padding: 0.55rem 1rem;
+      text-decoration: none;
+      border: 2px solid var(--accent);
+    }
+    .skip-link:focus { left: 0.5rem; }
+
+    .wrap { max-width: 760px; margin: 0 auto; padding: 40px 20px 64px; }
+
+    .back { display: inline-block; margin-bottom: 28px; color: var(--muted); text-decoration: none; font-size: 14px; }
+    .back:hover { color: var(--accent); }
+
+    h1 { font-size: clamp(30px, 6vw, 46px); line-height: 1.1; letter-spacing: -0.5px; }
+    .byline { margin-top: 12px; color: var(--muted); font-size: 14px; }
+
+    h2 { font-size: 24px; margin: 40px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+    h3 { font-size: 19px; margin: 22px 0 8px; }
+    p { margin-bottom: 14px; color: #ccd1de; }
+    code { font-family: Consolas, "Courier New", monospace; color: #b8ccff; }
+
+    .desc { border-left: 3px solid var(--accent); background: rgba(122, 162, 255, 0.1); padding: 14px 18px; margin: 14px 0 20px; color: var(--text); }
+
+    .problem, .fix {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 6px 22px 18px;
+      margin-bottom: 18px;
+    }
+    .problem { border-left: 4px solid var(--bad); }
+    .fix { border-left: 4px solid var(--good); }
+
+    .label { display: inline-block; margin-top: 4px; font-size: 12px; color: var(--muted); }
+
+    pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: #0a0c11;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 12px 14px;
+      margin: 6px 0 14px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    figure { margin: 16px 0 24px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; }
+    figure img { display: block; width: 100%; height: auto; border-radius: 6px; }
+    figcaption { margin-top: 10px; font-size: 13px; color: var(--muted); }
+
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); font-size: 14px; }
+    caption { text-align: left; padding-bottom: 8px; color: var(--muted); font-size: 13px; caption-side: top; }
+    th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--line); }
+    thead th { background: #1b2130; }
+    td.before { color: var(--bad); }
+    td.after, td.better { color: var(--good); }
+
+    footer { text-align: center; padding: 26px 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+
+    @media (max-width: 520px) {
+      .wrap { padding: 28px 14px 48px; }
+      .problem, .fix { padding: 4px 16px 14px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<main id="main-content" class="wrap">
+
+  <nav aria-label="Breadcrumb">
+    <a class="back" href="../index.html">&larr; Back to portfolio</a>
+  </nav>
+
+  <h1>Website Performance Optimization Report</h1>
+  <p class="byline">Khakimov Mukhammadamin &bull; Web Programming &bull; Week 9-2</p>
+
+  <h2>1. Introduction</h2>
+  <p>
+    I used Google Lighthouse (Performance category) to test the home page of my portfolio.
+    My page was already fast, so to show the effect of each fix clearly I made a deliberately
+    slowed copy of it, with problems the lecture warns about, and compared it with the fixed page.
+    I found two problems and made three improvements.
+  </p>
+
+  <h2>2. The Problems</h2>
+  <p>
+    You can open <a href="performance-before.html">the slowed copy of the home page</a> and test it yourself.
+    Lighthouse reported these problems on it:
+  </p>
+
+  <section class="problem" aria-labelledby="p1">
+    <h3 id="p1">Problem 1: A font stylesheet that blocks rendering</h3>
+    <p>
+      The page loaded a Google Fonts stylesheet in the head. A stylesheet in the head blocks the first
+      paint, so visitors saw a blank page until it downloaded. It also asked for 15 font weights
+      that the page never uses, which made the download bigger.
+    </p>
+    <span class="label">Code in the slowed copy</span>
+<pre><code>&lt;link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900
+  &amp;family=Poppins:wght@100;200;...;900&amp;display=swap" rel="stylesheet"&gt;</code></pre>
+  </section>
+
+  <section class="problem" aria-labelledby="p2">
+    <h3 id="p2">Problem 2: A slow script in the head with no defer</h3>
+    <p>
+      A script in the head ran a long calculation. A normal script stops the browser from reading the rest
+      of the HTML until it has finished, so the page could not appear. Lighthouse shows this as a long
+      main-thread task and a higher Total Blocking Time.
+    </p>
+    <span class="label">Code in the slowed copy</span>
+<pre><code>&lt;script&gt;
+  for (var n = 2; n &lt; LOAD; n++) { ...slow loop... }
+&lt;/script&gt;</code></pre>
+  </section>
+
+  <h2>3. Before the Fixes</h2>
+  <p>Lighthouse performance score for the slowed copy of the home page.</p>
+
+  <figure>
+    <img src="screenshots/performance_before.jpg" width="1066" height="1136" loading="lazy" alt="Screenshot of the initial Lighthouse performance score for the slowed copy of the home page">
+    <figcaption>Lighthouse performance score before the fixes.</figcaption>
+  </figure>
+
+  <h2>4. After the Fixes</h2>
+  <p>Lighthouse performance score for the fixed home page.</p>
+
+  <figure>
+    <img src="screenshots/performance_after.png" width="1066" height="1136" loading="lazy" alt="Screenshot of the improved Lighthouse performance score for the fixed home page">
+    <figcaption>Lighthouse performance score after the fixes.</figcaption>
+  </figure>
+
+  <h2>5. What Was Fixed</h2>
+  <p class="desc">
+    I removed the font stylesheet that blocked the first paint and the slow script that held the page up.
+    I also told the browser to load my profile photo first, because it is the biggest thing at the top of the page.
+  </p>
+
+  <section class="fix" aria-labelledby="f1">
+    <h3 id="f1">Fix 1: Removed the render-blocking font stylesheet</h3>
+    <p>
+      The page does not need the Google Fonts files, so I removed the link. This also removes the request to another
+      website and the unused weights. If a custom font is needed, load it with <code>rel="preload"</code> so it
+      does not block the page, and ask only for the weights you use.
+    </p>
+    <span class="label">Before</span>
+<pre><code>&lt;link href="https://fonts.googleapis.com/css2?...15 weights..." rel="stylesheet"&gt;</code></pre>
+    <span class="label">After</span>
+<pre><code>(removed)</code></pre>
+  </section>
+
+  <section class="fix" aria-labelledby="f2">
+    <h3 id="f2">Fix 2: Removed the blocking script</h3>
+    <p>
+      The page does not need the script, so I removed it and the browser can show the page straight away.
+      A script that is needed should use <code>defer</code>, which lets the HTML keep loading while the file downloads.
+    </p>
+    <span class="label">Before</span>
+<pre><code>&lt;script&gt; ...slow loop... &lt;/script&gt;</code></pre>
+    <span class="label">After</span>
+<pre><code>(removed; for a needed script use: &lt;script src="app.js" defer&gt;&lt;/script&gt;)</code></pre>
+  </section>
+
+  <section class="fix" aria-labelledby="f3">
+    <h3 id="f3">Fix 3: Load the profile photo first</h3>
+    <p>
+      The profile photo is the largest element at the top of the page, so it decides the Largest Contentful Paint.
+      I added a preload hint and <code>fetchpriority="high"</code> so the browser starts downloading it early, and
+      <code>decoding="async"</code> so decoding does not hold up other work.
+    </p>
+    <span class="label">Before</span>
+<pre><code>&lt;img src="photo_2026-10-04_17-32-28.jpg" alt="..."&gt;</code></pre>
+    <span class="label">After</span>
+<pre><code>&lt;link rel="preload" as="image" href="photo_2026-10-04_17-32-28.jpg" fetchpriority="high"&gt;
+&lt;img src="photo_2026-10-04_17-32-28.jpg" alt="..." fetchpriority="high" decoding="async"&gt;</code></pre>
+  </section>
+
+  <h2>6. Results</h2>
+  <p>I counted what the browser has to do before it can show the home page.</p>
+
+  <div class="table-scroll">
+    <table>
+      <caption>Slowed copy and fixed home page</caption>
+      <thead>
+        <tr><th scope="col">Measure</th><th scope="col">Before</th><th scope="col">After</th><th scope="col">Change</th></tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">Render-blocking font stylesheets</th><td class="before">1</td><td class="after">0</td><td class="better">Removed</td></tr>
+        <tr><th scope="row">Blocking scripts in the head</th><td class="before">1</td><td class="after">0</td><td class="better">Removed</td></tr>
+        <tr><th scope="row">Google Fonts weights requested</th><td class="before">15</td><td class="after">0</td><td class="better">15 fewer</td></tr>
+        <tr><th scope="row">Main photo load priority</th><td class="before">Default</td><td class="after">High</td><td class="better">Loads earlier</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>7. Conclusion</h2>
+  <p>
+    These changes let the page start to appear sooner and load the most important image first.
+    The page looks the same as before, and Lighthouse shows a higher performance score.
+  </p>
+
+  <p><a href="index.html">Return to the portfolio</a></p>
+
+</main>
+
+<footer>
+  <p>&copy; 2026 &middot; Khakimov Mukhammadamin</p>
+</footer>
+
+</body>
+</html>
