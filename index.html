@@ -1,20 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Mukhammadamin | Developer Portfolio</title>
 
+  <!-- ISSUE 1: font stylesheet that blocks rendering, with weights the page never uses -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
+
+  <!-- ISSUE 2: slow script in the head with no defer, so the page cannot show until it finishes -->
+  <script>
+    // SPEED KNOB: bigger number = slower page = lower Lighthouse score
+    var LOAD = 1450000;
+    var count = 0;
+    for (var n = 2; n < LOAD; n++) {
+      var ok = true;
+      for (var d = 2; d * d <= n; d++) { if (n % d === 0) { ok = false; break; } }
+      if (ok) count++;
+    }
+  </script>
 </head>
 
 <body>
 
   <main class="container">
 
-    <header Class="topbar">
+    <header class="topbar">
       <a href="index.html" class="logo">
         <span class="logo-mark">M.</span>
         <span>PORTFOLIO</span>
@@ -29,7 +43,10 @@
     <section class="profile-card">
 
       <div class="profile-image">
-        <img src="photo_2026-10-04_17-32-28.jpg">
+        <img
+          src="photo_2026-10-04_17-32-28.jpg"
+          alt="Mukhammadamin's profile photo"
+        >
       </div>
 
       <div class="profile-content">
@@ -59,7 +76,7 @@
 
         <a href="#projects" class="discover-link">
           Explore my coursework
-          <span>↘</span>
+          <span>↘️</span>
         </a>
 
       </div>
@@ -90,7 +107,7 @@
             <strong>Week 02</strong>
             <small>Foundations</small>
           </span>
-          <span class="week-arrow">↗</span>
+          <span class="week-arrow">↗️</span>
         </a>
 
         <a href="index3.html" class="week-card">
@@ -99,7 +116,7 @@
             <strong>Week 03</strong>
             <small>HTML & Structure</small>
           </span>
-          <span class="week-arrow">↗</span>
+          <span class="week-arrow">↗️</span>
         </a>
 
         <a href="index4.html" class="week-card">
@@ -108,7 +125,7 @@
             <strong>Week 04</strong>
             <small>Styling & Layout</small>
           </span>
-          <span class="week-arrow">↗</span>
+          <span class="week-arrow">↗️</span>
         </a>
 
         <a href="index5.html" class="week-card">
@@ -117,16 +134,15 @@
             <strong>Week 05</strong>
             <small>Web Components</small>
           </span>
-          <span class="week-arrow">↗</span>
+          <span class="week-arrow">↗️</span>
         </a>
-
         <a href="index6.html" class="week-card">
           <span class="week-number">05</span>
           <span class="week-info">
             <strong>Week 06</strong>
             <small>JavaScript & Fetch</small>
           </span>
-          <span class="week-arrow">↗</span>
+          <span class="week-arrow">↗️</span>
         </a>
 
         <a href="index7.html" class="week-card">
@@ -135,7 +151,7 @@
             <strong>Week 07</strong>
             <small>Interactive Web</small>
           </span>
-          <span class="week-arrow">↗</span>
+          <span class="week-arrow">↗️</span>
         </a>
 
         <a href="week8/index8.html" class="week-card">
@@ -144,7 +160,7 @@
             <strong>Week 08</strong>
             <small>Practice & Projects</small>
           </span>
-          <span class="week-arrow">↗</span>
+          <span class="week-arrow">↗️</span>
         </a>
 
         <a href="week9/index9.html" class="week-card">
@@ -153,7 +169,7 @@
             <strong>Week 09</strong>
             <small>Creative Coding</small>
           </span>
-          <span class="week-arrow">↗</span>
+          <span class="week-arrow">↗️</span>
         </a>
         <a href="week9-2.html" class="week-card">
           <span class="week-number">09-2</span>
@@ -161,7 +177,7 @@
             <strong>Week 09-2</strong>
             <small>Creative Coding</small>
           </span>
-          <span class="week-arrow">↗</span>
+          <span class="week-arrow">↗️</span>
         </a>
         <a href="https://bahriddinoff01.github.io/ai-travel-planner/" class="week-card">
           <span class="week-number"></span>
@@ -169,7 +185,7 @@
             <strong>Team Project</strong>
             <small>Creative Coding</small>
           </span>
-          <span class="week-arrow">↗</span>
+          <span class="week-arrow">↗️</span>
         </a>
         <a href="https://bahriddinoff01.github.io/team-19-proposal/" class="week-card">
           <span class="week-number"></span>
@@ -177,7 +193,7 @@
             <strong>Team Project Proposal</strong>
             <small>Creative Coding</small>
           </span>
-          <span class="week-arrow">↗</span>
+          <span class="week-arrow">↗️</span>
         </a>
         <a href="pdf_files/AI-Travel-Planner-Proposal.pdf" class="week-card">
           <span class="week-number"></span>
@@ -185,7 +201,7 @@
             <strong>Team Project Proposal</strong>
             <small>Creative Coding</small>
           </span>
-          <span class="week-arrow">↗</span>
+          <span class="week-arrow">↗️</span>
         </a>
 
       </div>
@@ -200,5 +216,4 @@
   </main>
 
 </body>
-
 </html>
