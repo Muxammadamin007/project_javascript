@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101310">
+
+  <title>404 | Page Not Found — Mukhammadamin Khakimov</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #101310;
+      --surface: #191e19;
+      --accent: #c5f467;
+      --white: #f4f5f0;
+      --gray: #929a91;
+      --border: #303830;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Inter, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      top: -300px;
+      right: -150px;
+      background: radial-gradient(
+        circle,
+        rgba(197, 244, 103, 0.10),
+        transparent 70%
+      );
+      pointer-events: none;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      bottom: -300px;
+      left: -150px;
+      background: radial-gradient(
+        circle,
+        rgba(197, 244, 103, 0.07),
+        transparent 70%
+      );
+      pointer-events: none;
+    }
+
+    header {
+      width: 100%;
+      padding: 28px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .status {
+      color: var(--gray);
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .status span {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 70px 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .container {
+      max-width: 750px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .error-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 15px;
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 35px;
+    }
+
+    .error-label::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+
+    .error-number {
+      font-size: clamp(120px, 24vw, 240px);
+      font-weight: 900;
+      letter-spacing: -15px;
+      line-height: 0.9;
+      color: var(--accent);
+      margin-bottom: 30px;
+      animation: appear 0.8s ease;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      font-size: clamp(27px, 5vw, 42px);
+      letter-spacing: -1.5px;
+      margin-bottom: 17px;
+      font-weight: 800;
+    }
+
+    .description {
+      color: var(--gray);
+      font-size: 16px;
+      line-height: 1.8;
+      max-width: 490px;
+      margin: 0 auto;
+    }
+
+    .divider {
+      width: 55px;
+      height: 3px;
+      background: var(--accent);
+      margin: 30px auto;
+      border-radius: 5px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 13px;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 23px;
+      border-radius: 7px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 750;
+      transition: 0.25s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #101310;
+      border: 1px solid var(--accent);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(197, 244, 103, 0.15);
+    }
+
+    .btn-secondary {
+      border: 1px solid var(--border);
+      color: var(--white);
+      background: var(--surface);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .hint {
+      margin-top: 40px;
+      font-size: 12px;
+      color: #626b61;
+    }
+
+    footer {
+      padding: 25px 8%;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
+    }
+
+    footer p {
+      color: var(--gray);
+      font-size: 12px;
+    }
+
+    footer strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 22px 6%;
+      }
+
+      .status {
+        font-size: 10px;
+      }
+
+      .error-number {
+        letter-spacing: -8px;
+      }
+
+      .description {
+        font-size: 14px;
+      }
+
+      .buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        width: min(280px, 100%);
+      }
+
+      footer {
+        justify-content: center;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <a href="index.html" class="logo">
+      M<span>.</span> KH
+    </a>
+
+    <div class="status">
+      <span></span>
+      Developer Portfolio
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <div class="error-label">
+        Error 404 — Not Found
+      </div>
+
+      <div class="error-number">404</div>
+
+      <h1>Page not found.</h1>
+
+      <p class="description">
+        Looks like you've taken a wrong turn.
+        The page you're looking for doesn't exist,
+        has been moved, or is temporarily unavailable.
+      </p>
+
+      <div class="divider"></div>
+
+      <div class="buttons">
+
+        <a href="../index.html" class="btn btn-primary">
+          ← Back to Homepage
+        </a>
+
+        <a href="javascript:history.back()" class="btn btn-secondary">
+          Go Back ↗
+        </a>
+
+      </div>
+
+      <p class="hint">
+        Don't worry. Every great developer gets lost sometimes.
+      </p>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 <strong>Mukhammadamin Khakimov</strong></p>
+    <p>Web Developer · Backend Developer · AI Learner</p>
+  </footer>
+
+</body>
+</html>

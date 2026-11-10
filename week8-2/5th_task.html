@@ -1,0 +1,540 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+
+    <style>
+        :root {
+            --bg: #f4f5fb;
+            --card: #ffffff;
+            --primary: #6c63ff;
+            --primary-dark: #5148e5;
+            --text: #25263a;
+            --muted: #85879b;
+            --border: #e6e7f0;
+            --success: #16a36a;
+            --danger: #e05260;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            padding: 45px 16px;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .page {
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .band {
+            height: 7px;
+            border-radius: 14px 14px 0 0;
+            background: linear-gradient(90deg, #6c63ff, #a78bfa, #ec8bcb);
+        }
+
+        .sheet {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 16px 16px;
+            padding: 35px;
+            box-shadow: 0 15px 45px rgba(42, 43, 75, 0.07);
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--text);
+        }
+
+        h1::before {
+            content: "STUDENT PORTAL";
+            display: block;
+            margin-bottom: 9px;
+            font-size: 0.72rem;
+            letter-spacing: 3px;
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .lead {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin: 12px 0 25px;
+        }
+
+        .meter {
+            margin-bottom: 27px;
+            padding: 17px;
+            background: #f7f6ff;
+            border: 1px solid #e9e6ff;
+            border-radius: 12px;
+        }
+
+        .meter-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            font-size: 0.82rem;
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+
+        #meterText {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .track {
+            height: 8px;
+            background: #e7e5f5;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .fill {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #6c63ff, #a78bfa);
+            border-radius: 20px;
+            transition: width 0.3s ease;
+        }
+
+        fieldset {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 18px 5px;
+            margin-bottom: 22px;
+            background: #fff;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        fieldset:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.07);
+        }
+
+        legend {
+            padding: 0 9px;
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0 16px;
+        }
+
+        .item {
+            margin-bottom: 16px;
+        }
+
+        .item.wide {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            font-size: 0.83rem;
+            font-weight: 700;
+            margin-bottom: 7px;
+            color: #414257;
+        }
+
+        label small {
+            font-weight: 500;
+            color: var(--muted);
+        }
+
+        input:not([type="checkbox"]):not([type="range"]),
+        select {
+            display: block;
+            width: 100%;
+            padding: 12px 13px;
+            font: inherit;
+            font-size: 0.9rem;
+            color: var(--text);
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            background: #fafaff;
+            transition: 0.2s;
+        }
+
+        input::placeholder {
+            color: #adaebd;
+        }
+
+        select {
+            color-scheme: light;
+        }
+
+        input:focus-visible,
+        select:focus-visible {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
+        }
+
+        input:not(:placeholder-shown):valid {
+            border-color: #32b981;
+            background: #f5fff9;
+        }
+
+        input:not(:placeholder-shown):invalid {
+            border-color: #e87982;
+            background: #fff8f8;
+        }
+
+        input[type="date"]:valid {
+            border-color: #32b981;
+        }
+
+        select:valid {
+            border-color: #32b981;
+        }
+
+        select:invalid {
+            color: #999bad;
+        }
+
+        .slider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .slider input {
+            flex: 1;
+            accent-color: var(--primary);
+        }
+
+        output {
+            min-width: 3.4em;
+            text-align: right;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .terms {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            margin: 5px 0 23px;
+            font-size: 0.87rem;
+            color: #66687c;
+        }
+
+        .terms input {
+            margin-top: 4px;
+            width: 17px;
+            height: 17px;
+            flex-shrink: 0;
+            accent-color: var(--primary);
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        button {
+            font: inherit;
+            font-weight: 750;
+            padding: 12px 20px;
+            border-radius: 9px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: 0.2s;
+        }
+
+        .primary {
+            background: var(--primary);
+            color: white;
+            flex: 1;
+            box-shadow: 0 4px 12px rgba(108, 99, 255, 0.2);
+        }
+
+        .primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 7px 16px rgba(108, 99, 255, 0.25);
+        }
+
+        .primary:active {
+            transform: translateY(0);
+        }
+
+        .ghost {
+            background: white;
+            color: #62647a;
+            border-color: var(--border);
+        }
+
+        .ghost:hover {
+            background: #f5f4ff;
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        #receipt {
+            display: none;
+            margin-top: 25px;
+            border: 1px solid #b9ebd1;
+            border-left: 4px solid var(--success);
+            border-radius: 11px;
+            padding: 20px;
+            background: #f3fff8;
+        }
+
+        #receipt h2 {
+            font-size: 1.15rem;
+            margin-bottom: 14px;
+            color: var(--success);
+        }
+
+        #receipt dl {
+            display: grid;
+            grid-template-columns: max-content 1fr;
+            gap: 8px 16px;
+            font-size: 0.88rem;
+        }
+
+        #receipt dt {
+            color: #788b80;
+        }
+
+        #receipt dd {
+            color: #303d35;
+            font-weight: 600;
+            overflow-wrap: anywhere;
+        }
+
+        @media (max-width: 560px) {
+            body {
+                padding: 22px 12px 35px;
+            }
+
+            .sheet {
+                padding: 24px 17px;
+            }
+
+            h1 {
+                font-size: 1.65rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .item.wide {
+                grid-column: auto;
+            }
+
+            fieldset {
+                padding: 15px 13px 4px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .actions button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <div class="band"></div>
+        <div class="sheet">
+            <h1>Student Registration</h1>
+
+            <div class="meter" aria-live="polite">
+                <div class="meter-top">
+                    <span>Form progress</span>
+                    <span id="meterText">0 / 0 fields valid</span>
+                </div>
+                <div class="track">
+                    <div class="fill" id="meterFill"></div>
+                </div>
+            </div>
+
+            <form id="regForm" method="post" action="#">
+                <fieldset>
+                    <legend>About you</legend>
+                    <div class="grid">
+                        <div class="item wide">
+                            <label for="fullName">Full name</label>
+                            <input type="text" id="fullName" name="fullName"
+                                placeholder="First and last name" required
+                                minlength="3" maxlength="60">
+                        </div>
+
+                        <div class="item">
+                            <label for="sid">Student ID <small>(9 digits)</small></label>
+                            <input type="text" id="sid" name="sid"
+                                placeholder="202612345" inputmode="numeric"
+                                required pattern="[0-9]{9}"
+                                title="Student ID must be exactly 9 digits">
+                        </div>
+
+                        <div class="item">
+                            <label for="birth">Date of birth</label>
+                            <input type="date" id="birth" name="birth"
+                                required min="1980-01-01" max="2010-12-31">
+                        </div>
+
+                        <div class="item wide">
+                            <label for="major">Major</label>
+                            <select id="major" name="major" required>
+                                <option value="" selected disabled>Choose your major</option>
+                                <option>Computer Science</option>
+                                <option>Software Engineering</option>
+                                <option>Information Technology</option>
+                                <option>Electrical Engineering</option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Account</legend>
+                    <div class="grid">
+                        <div class="item wide">
+                            <label for="mail">Email</label>
+                            <input type="email" id="mail" name="mail"
+                                placeholder="name@gachon.ac.kr" required>
+                        </div>
+
+                        <div class="item">
+                            <label for="pw">Password <small>(min 8)</small></label>
+                            <input type="password" id="pw" name="pw"
+                                placeholder="At least 8 characters"
+                                required minlength="8">
+                        </div>
+
+                        <div class="item">
+                            <label for="tel">Telephone</label>
+                            <input type="tel" id="tel" name="tel"
+                                placeholder="010-1234-5678" required
+                                pattern="01[0-9]-[0-9]{4}-[0-9]{4}"
+                                title="Format: 010-1234-5678">
+                        </div>
+
+                        <div class="item wide">
+                            <label for="years">Years of coding experience</label>
+                            <div class="slider">
+                                <input type="range" id="years" name="years"
+                                    min="0" max="10" value="0">
+                                <output id="yearsOut" for="years">0 yrs</output>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="terms">
+                    <input type="checkbox" id="agree" name="agree" required>
+                    <label for="agree" style="font-weight:400;margin:0">
+                        I agree to the course rules and the terms of use.
+                    </label>
+                </div>
+
+                <div class="actions">
+                    <button type="submit" class="primary">Check validation</button>
+                    <button type="reset" class="ghost">Reset</button>
+                </div>
+            </form>
+
+            <section id="receipt" aria-live="polite">
+                <h2>All fields are valid ✔</h2>
+                <dl id="receiptList"></dl>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('regForm');
+        const fields = [...form.querySelectorAll('input:not([type="range"]), select')];
+        const fill = document.getElementById('meterFill');
+        const meterText = document.getElementById('meterText');
+        const years = document.getElementById('years');
+        const yearsOut = document.getElementById('yearsOut');
+        const receipt = document.getElementById('receipt');
+
+        function refreshMeter() {
+            const good = fields.filter(f => f.checkValidity()).length;
+            fill.style.width = (good / fields.length * 100) + '%';
+            meterText.textContent = good + ' / ' + fields.length + ' fields valid';
+        }
+
+        years.addEventListener('input', () => {
+            yearsOut.textContent = years.value + (years.value === '1' ? ' yr' : ' yrs');
+        });
+
+        form.addEventListener('input', refreshMeter);
+        form.addEventListener('change', refreshMeter);
+
+        form.addEventListener('reset', () => {
+            setTimeout(() => {
+                refreshMeter();
+                yearsOut.textContent = '0 yrs';
+                receipt.style.display = 'none';
+            });
+        });
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const data = new FormData(form);
+            const list = document.getElementById('receiptList');
+            list.innerHTML = '';
+
+            const labels = {
+                fullName: 'Name',
+                sid: 'Student ID',
+                birth: 'Born',
+                major: 'Major',
+                mail: 'Email',
+                tel: 'Phone',
+                years: 'Coding'
+            };
+
+            Object.entries(labels).forEach(([key, text]) => {
+                const dt = document.createElement('dt');
+                const dd = document.createElement('dd');
+
+                dt.textContent = text;
+                dd.textContent = data.get(key) + (key === 'years' ? ' yrs' : '');
+
+                list.append(dt, dd);
+            });
+
+            receipt.style.display = 'block';
+            receipt.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+
+        refreshMeter();
+    </script>
+</body>
+</html>
